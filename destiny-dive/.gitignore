@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/destiny-dive/node_modules
+/destiny_dive/node_modules
 /.pnp
 .pnp.js
 
