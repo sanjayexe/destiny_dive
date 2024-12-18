@@ -1,0 +1,11 @@
+.services-section .row:hover {
+  cursor: pointer;
+}
+.header-container p {
+  font-size: 14px;
+  text-shadow: 5px 5px 4px rgba(25, 118, 210, 0.6);
+  margin-top: 10px;
+  font-weight: bold;
+  color: #333;
+  white-space: pre-line; /* Preserve newlines for multi-line text */
+}

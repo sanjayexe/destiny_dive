@@ -1,0 +1,13 @@
+.button {
+  background: #5885b8;
+}
+
+.form-bg {
+  backdrop-filter: blur(px);
+  background-color: #ffffff80;
+  border-radius: 18%;
+}
+.hr {
+  color: #6e95c2c7;
+  width: 350px;
+}

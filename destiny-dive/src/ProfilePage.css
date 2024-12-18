@@ -1,0 +1,25 @@
+.dashboard {
+  background: rgba(30, 40, 117, 1);
+}
+.p-container {
+  box-shadow: 0px 2.89px 4.33px 0px rgba(0, 0, 0, 0.15);
+}
+
+.p-btn {
+  background: rgba(240, 239, 250, 1);
+}
+.border-custom {
+  /* border: 3px solid #ddd; */
+  border-radius: 8px;
+  border: 0.72px solid rgba(0, 0, 0, 0.15);
+}
+.dropdown-toggle-icon {
+  font-size: 20px; /* Adjust size */
+  color: #007bff; /* Primary color or customize */
+  margin-left: 5px; /* Space between username and icon */
+  transition: color 0.3s; /* Smooth transition for hover effect */
+}
+
+.dropdown-toggle-icon:hover {
+  color: yellow; /* Darker shade on hover */
+}

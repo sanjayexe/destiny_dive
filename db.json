@@ -1,0 +1,507 @@
+{
+  "users": [
+    {
+      "id": "a3ad",
+      "email": "sanjayt.22msc@kongu.edu",
+      "password": "123456"
+    },
+    {
+      "id": "f116",
+      "email": "sanjay.jay18v@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "afd6",
+      "email": "sanjayt.22msc@kongu.edu",
+      "password": "123456"
+    },
+    {
+      "id": "49e0",
+      "email": "sanjayt.22msc@kongu.edu",
+      "password": "123456"
+    },
+    {
+      "id": "cc30",
+      "username": "sanjay_thirumoorthy",
+      "email": "sanjay.jay18v@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "868a",
+      "username": "sanjay",
+      "emailOrMobile": "9345748085",
+      "password": "123456"
+    },
+    {
+      "id": "1219",
+      "emailOrMobile": "9345748085"
+    },
+    {
+      "id": "f5cf",
+      "username": "sanjay",
+      "emailOrMobile": "9345748085",
+      "password": "Sanjay@18",
+      "otp": 607122
+    },
+    {
+      "id": "4261",
+      "username": "sanjay",
+      "emailOrMobile": "sanjay@gmail.com",
+      "password": "Sanjay@18",
+      "otp": "702593"
+    },
+    {
+      "id": "4269",
+      "username": "sanjay",
+      "emailOrMobile": "sanjay@gmail.com",
+      "password": "Sanjay@18",
+      "otp": "262713"
+    },
+    {
+      "id": "2344",
+      "username": "sanjayt",
+      "emailOrMobile": "sanjayy@gmail.com",
+      "password": "Sanjay@18",
+      "otp": "262713"
+    },
+    {
+      "id": "2344",
+      "username": "sanjayt",
+      "emailOrMobile": "admin@gmail.com",
+      "password": "Sanjay@18"
+    },
+    {
+      "id": "a494",
+      "username": "sanjay",
+      "emailOrMobile": "9345748085",
+      "password": "Sanjay@18",
+      "otp": "640998"
+    },
+    {
+      "id": "2f27",
+      "username": "sanjay",
+      "emailOrMobile": "9345748085",
+      "password": "Sanjay@188"
+    }
+  ],
+  "usersProfile": [
+    {
+      "id": "1",
+      "username": "sanjay",
+      "emailOrMobile": "john.doe@example.com",
+      "about": "Software Developer",
+      "profileImage": "https://via.placeholder.com/80"
+    }
+  ],
+  "colleges": [
+    {
+      "id": "1",
+      "name": "IIT Bombay",
+      "location": "Mumbai, India",
+      "type": "Indian",
+      "chances": 100,
+      "minPercentage": 90,
+      "degree": [
+        "Engineering",
+        "Science",
+        "mba"
+      ],
+      "recommendedCourses": [
+        "Computer Science",
+        "Mechanical Engineering"
+      ],
+      "universityType": "Autonomous",
+      "tuitionFee": 20000,
+      "courseDuration": "48 months"
+    },
+    {
+      "id": "2",
+      "name": "IIT Delhi",
+      "location": "Delhi, India",
+      "type": "Indian",
+      "chances": 50,
+      "minPercentage": 85,
+      "degree": [
+        "Engineering",
+        "Technology",
+        "mba"
+      ],
+      "recommendedCourses": [
+        "Civil Engineering",
+        "Electrical Engineering"
+      ],
+      "universityType": "Autonomous",
+      "tuitionFee": 18000,
+      "courseDuration": "48 months"
+    },
+    {
+      "id": "3",
+      "name": "IIM Ahmedabad",
+      "location": "Ahmedabad,India",
+      "type": "Indian",
+      "chances": 0,
+      "minPercentage": 75,
+      "degree": [
+        "Management",
+        "Bachelors"
+      ],
+      "recommendedCourses": [
+        "MBA",
+        "PGDM"
+      ],
+      "universityType": "Autonomous",
+      "tuitionFee": 25000,
+      "courseDuration": "24 months"
+    },
+    {
+      "id": "4",
+      "name": "Stanford University",
+      "location": "California, USA",
+      "type": "Abroad",
+      "chances": 0,
+      "minPercentage": 95,
+      "degree": [
+        "Engineering",
+        "Business",
+        "mba"
+      ],
+      "recommendedCourses": [
+        "MBA",
+        "Data Science",
+        "Law"
+      ],
+      "universityType": "Private",
+      "tuitionFee": 50000,
+      "courseDuration": "24 months"
+    },
+    {
+      "id": "4",
+      "name": "Stanford University",
+      "location": "California, USA",
+      "type": "Abroad",
+      "chances": 0,
+      "minPercentage": 95,
+      "degree": [
+        "Engineering",
+        "Business"
+      ],
+      "recommendedCourses": [
+        "MBA",
+        "Data Science"
+      ],
+      "universityType": "Private",
+      "tuitionFee": 50000,
+      "courseDuration": "24 months"
+    },
+    {
+      "id": "4",
+      "name": "Stanford University",
+      "location": "California, USA",
+      "type": "Abroad",
+      "chances": 0,
+      "minPercentage": 95,
+      "degree": [
+        "Engineering",
+        "Business",
+        "Bachelors",
+        "MBA",
+        "Law"
+      ],
+      "recommendedCourses": [
+        "MBA",
+        "Data Science"
+      ],
+      "universityType": "Private",
+      "tuitionFee": 50000,
+      "courseDuration": "24 months"
+    },
+    {
+      "id": "4",
+      "name": "Stanford University",
+      "location": "California, USA",
+      "type": "Abroad",
+      "chances": 0,
+      "minPercentage": 95,
+      "degree": [
+        "Engineering",
+        "Business"
+      ],
+      "recommendedCourses": [
+        "MBA",
+        "Data Science"
+      ],
+      "universityType": "Private",
+      "tuitionFee": 50000,
+      "courseDuration": "24 months"
+    },
+    {
+      "id": "4",
+      "name": "Stanford University",
+      "location": "California, USA",
+      "type": "Abroad",
+      "chances": 0,
+      "minPercentage": 95,
+      "degree": [
+        "Engineering",
+        "Business"
+      ],
+      "recommendedCourses": [
+        "MBA",
+        "Data Science"
+      ],
+      "universityType": "Private",
+      "tuitionFee": 50000,
+      "courseDuration": "24 months"
+    },
+    {
+      "id": "5",
+      "name": "Harvard University",
+      "location": "Massachusetts, USA",
+      "type": "Abroad",
+      "chances": 50,
+      "minPercentage": 93,
+      "degree": [
+        "Law",
+        "Science"
+      ],
+      "recommendedCourses": [
+        "Law",
+        "Physics"
+      ],
+      "universityType": "Private",
+      "tuitionFee": 45000,
+      "courseDuration": "36 months"
+    },
+    {
+      "id": "6",
+      "name": "Cambridge University",
+      "location": "Cambridge, UK",
+      "type": "Abroad",
+      "chances": 100,
+      "minPercentage": 92,
+      "degree": [
+        "Science",
+        "Technology"
+      ],
+      "recommendedCourses": [
+        "Physics",
+        "Mathematics"
+      ],
+      "universityType": "Public",
+      "tuitionFee": 35000,
+      "courseDuration": "36 months"
+    }
+  ],
+  "collegeInfo": [
+    {
+      "id": "1",
+      "name": "Stanford University",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "UMass is known for its academic programs, research, and public service...",
+      "courses": [
+        {
+          "category": "Engineering & Technology",
+          "popularCourses": "Mechanical, Civil, Computer Science, Electrical",
+          "fees": "₹4,88,000–₹12,20,000"
+        },
+        {
+          "category": "Health Sciences",
+          "popularCourses": "Medicine, Nursing, Pharmacy",
+          "fees": "₹8,54,000–₹24,40,000"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "IIM Ahmedabad",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "UMass is known for its academic programs, research, and public service. It has a mission to provide affordable, world-class education, conduct groundbreaking research, and create social and economic impact",
+      "courses": [
+        {
+          "category": "Business",
+          "popularCourses": "MBA, Marketing, Finance",
+          "fees": "₹20,00,000–₹50,00,000"
+        },
+        {
+          "category": "Law",
+          "popularCourses": "Corporate Law, International Law",
+          "fees": "₹15,00,000–₹30,00,000"
+        }
+      ]
+    }
+  ],
+  "applications": [
+    {
+      "id": "c4a9",
+      "fullName": "sanjay",
+      "gender": "Male",
+      "dob": "2005-06-02",
+      "community": "General",
+      "nationality": "Indian",
+      "aadharNumber": "123456789012",
+      "tenthBoard": "State Board",
+      "tenthYear": "2020",
+      "tenthPercentage": "75",
+      "twelfthBoard": "State Board",
+      "twelfthYear": "2022",
+      "twelfthPercentage": "83",
+      "subjectSpecialization": "",
+      "examName": "",
+      "rollNumber": "",
+      "scoreRank": "",
+      "stream": "Science",
+      "passportPhoto": {
+        "0": {}
+      },
+      "marksheet": {
+        "0": {}
+      },
+      "certificate": {
+        "0": {}
+      },
+      "examScorecard": {},
+      "supportingDocument": {},
+      "declaration": true,
+      "collegeName": "IIM Ahmedabad"
+    },
+    {
+      "id": "935f",
+      "fullName": "sanjay",
+      "gender": "Male",
+      "dob": "2005-06-02",
+      "community": "General",
+      "nationality": "Indian",
+      "aadharNumber": "123456789012",
+      "tenthBoard": "State Board",
+      "tenthYear": "2020",
+      "tenthPercentage": "75",
+      "twelfthBoard": "State Board",
+      "twelfthYear": "2022",
+      "twelfthPercentage": "83",
+      "subjectSpecialization": "",
+      "examName": "",
+      "rollNumber": "",
+      "scoreRank": "",
+      "stream": "Science",
+      "passportPhoto": {
+        "0": {}
+      },
+      "marksheet": {
+        "0": {}
+      },
+      "certificate": {
+        "0": {}
+      },
+      "examScorecard": {
+        "0": {}
+      },
+      "supportingDocument": {
+        "0": {}
+      },
+      "declaration": true,
+      "collegeName": "IIM Ahmedabad"
+    },
+    {
+      "id": "3d56",
+      "fullName": "sanjay",
+      "gender": "Male",
+      "dob": "2005-06-02",
+      "community": "General",
+      "nationality": "Indian",
+      "aadharNumber": "123456789012",
+      "tenthBoard": "State Board",
+      "tenthYear": "2020",
+      "tenthPercentage": "75",
+      "twelfthBoard": "State Board",
+      "twelfthYear": "2022",
+      "twelfthPercentage": "83",
+      "subjectSpecialization": "",
+      "examName": "",
+      "rollNumber": "",
+      "scoreRank": "",
+      "stream": "Science",
+      "passportPhoto": {
+        "0": {}
+      },
+      "marksheet": {
+        "0": {}
+      },
+      "certificate": {
+        "0": {}
+      },
+      "examScorecard": {
+        "0": {}
+      },
+      "supportingDocument": {
+        "0": {}
+      },
+      "declaration": true,
+      "collegeName": "IIM Ahmedabad"
+    },
+    {
+      "id": "0cb4",
+      "fullName": "sanjay",
+      "gender": "Male",
+      "dob": "2005-06-02",
+      "community": "General",
+      "nationality": "Indian",
+      "aadharNumber": "123456789012",
+      "tenthBoard": "State Board",
+      "tenthYear": "2019",
+      "tenthPercentage": "11.34",
+      "twelfthBoard": "CBSE",
+      "twelfthYear": "2020",
+      "twelfthPercentage": "22",
+      "subjectSpecialization": "",
+      "examName": "",
+      "rollNumber": "",
+      "scoreRank": "",
+      "stream": "Science",
+      "passportPhoto": {
+        "0": {}
+      },
+      "marksheet": {
+        "0": {}
+      },
+      "certificate": {},
+      "examScorecard": {},
+      "supportingDocument": {},
+      "declaration": true,
+      "collegeName": "IIM Ahmedabad"
+    },
+    {
+      "id": "d465",
+      "fullName": "sanjay",
+      "gender": "Male",
+      "dob": "2005-06-02",
+      "community": "General",
+      "nationality": "American",
+      "aadharNumber": "123456789012",
+      "tenthBoard": "CBSE",
+      "tenthYear": "2019",
+      "tenthPercentage": "123",
+      "twelfthBoard": "CBSE",
+      "twelfthYear": "2024",
+      "twelfthPercentage": "12",
+      "subjectSpecialization": "",
+      "examName": "",
+      "rollNumber": "",
+      "scoreRank": "",
+      "stream": "Science",
+      "passportPhoto": {
+        "0": {}
+      },
+      "marksheet": {
+        "0": {}
+      },
+      "certificate": {
+        "0": {}
+      },
+      "examScorecard": {},
+      "supportingDocument": {},
+      "declaration": true,
+      "collegeName": "IIM Ahmedabad",
+      "Type": "Indian"
+    }
+  ]
+}

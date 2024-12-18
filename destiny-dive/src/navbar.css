@@ -1,0 +1,15 @@
+/* Hover effect for Login button */
+.navbar .btn:hover {
+  color: white; /* Changes text color */
+  background-color: #007bff; /* Sets a blue background */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+.navbar li.nav-link:hover {
+  color: black;
+}
+/* Hover effect for Sign-Up button */
+.navbar .btn-warning:hover {
+  background-color: #ff8800; /* Slightly darker orange */
+  color: yellow; /* Ensures text remains visible */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
