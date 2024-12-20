@@ -152,7 +152,7 @@ const Universities = () => {
         {/* Main Content */}
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div
-            className="card shadow-lg  mt-5   p-4 w-100"
+            className="card shadow-lg  mt-5   p-4 w-100 col-11 col-md-8 col-lg-6"
             style={{ maxWidth: "600px" }}
           >
             {(step === 3 ||
@@ -199,8 +199,13 @@ const Universities = () => {
                     onClick={() => handleChange("degree", degree.name)}
                     style={{ cursor: "pointer" }}
                   >
-                    <img src={degree.img} alt={degree.name} />
-                    <p className="mt-2 fw-semibold fs-4">{degree.name}</p>
+                    <img
+                      src={degree.img}
+                      alt={degree.name}
+                      style={{ maxWidth: "80px" }}
+                      className="img-fluid"
+                    />
+                    <p className="mt-2 fw-semibold fs-5 ">{degree.name}</p>
                   </div>
                 ))}
               </div>
@@ -219,11 +224,11 @@ const Universities = () => {
                   />
                 </div>
 
-                <div className="d-flex flex-wrap align-items-center justify-content-center">
+                <div className="d-flex flex-wrap align-items-center justify-content-center  ">
                   {filteredStates.map((state) => (
                     <div
                       key={state.name}
-                      className={`state-option text-center m-2 ${
+                      className={`state-option text-center m-sm-2 m-0  gap-3 ${
                         formData.state === state.name ? "selected" : ""
                       }`}
                       onClick={() => handleStateSelection(state.name)}
@@ -232,7 +237,11 @@ const Universities = () => {
                       <img
                         src={state.img}
                         alt={state.name}
-                        style={{ width: "100px", cursor: "pointer" }}
+                        style={{
+                          maxWidth: "120px",
+                          minWidth: "80px",
+                          cursor: "pointer",
+                        }}
                       />
                       <p className="mt-2">{state.name}</p>
                     </div>
@@ -247,7 +256,7 @@ const Universities = () => {
                 {formData.degree === "Masters" ? (
                   <>
                     {/* Occupation Question */}
-                    <div className="text-center mb-3 d-flex">
+                    <div className="text-center mb-3 d-sm-flex d-block">
                       <button
                         className={`rounded-2 btn mx-2 rounded-5 board mb-1 ${
                           formData.occupation === "Bachelor Graduate"
@@ -511,8 +520,12 @@ const Universities = () => {
                     Continue
                     <img
                       src={continue_btn}
-                      className=""
-                      style={{ width: "2vw", height: "auto" }}
+                      className="ms-1"
+                      style={{
+                        maxWidth: "2rem",
+                        //minwidth: "4rem",
+                        height: "auto",
+                      }}
                     />
                   </button>
                 </div>
@@ -626,14 +639,26 @@ const Universities = () => {
                   {formData.degree === "Bachelors" &&
                     `Major : ${formData.major}`}
                 </p>
-                <button
-                  className="btn btn-primary mt-4"
-                  onClick={() => {
-                    navigate("/colleges", { state: { formData } });
-                  }}
-                >
-                  View Recommended Colleges
-                </button>
+                {/* Next Button */}
+                <div className="d-flex justify-content-center mt-4">
+                  <button
+                    className="continue-btn rounded-5"
+                    onClick={() => {
+                      navigate("/colleges", { state: { formData } });
+                    }}
+                  >
+                    View Recommended Colleges
+                    <img
+                      src={continue_btn}
+                      className="ms-1"
+                      style={{
+                        maxWidth: "2rem",
+                        //minwidth: "4rem",
+                        height: "auto",
+                      }}
+                    />
+                  </button>
+                </div>
               </div>
             )}
           </div>

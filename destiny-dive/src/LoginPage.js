@@ -14,7 +14,8 @@ const LoginPage = () => {
   const { setUser } = useContext(UserContext);
   const [formData, setFormData] = useState({
     emailOrMobile: "",
-    password: "",
+    email: "",
+    mobile: Number,
   });
   const [error, setError] = useState("");
   const [emailOrMobileError, setEmailOrMobileError] = useState("");
@@ -25,8 +26,9 @@ const LoginPage = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
 
+    setFormData({ ...formData, [name]: value });
+    console.log(formData);
     if (name === "emailOrMobile") {
       setEmailOrMobileError("");
     }
@@ -74,13 +76,17 @@ const LoginPage = () => {
     }
 
     try {
-      // Query the server for matching credentials
-      const response = await axios.get(
-        `http://localhost:4501/users?emailOrMobile=${formData.emailOrMobile}&password=${formData.password}`
+      // Send POST request for login
+      const response = await axios.post(
+        `http://localhost:4503/api/login`, // Assuming your route for login is '/login'
+        {
+          emailOrMobile: formData.emailOrMobile,
+          password: formData.password,
+        }
       );
 
-      if (response.data.length > 0) {
-        const users = response.data[0];
+      if (response.data && response.data.user) {
+        const users = response.data.user;
         if (users.emailOrMobile === "admin") {
           setIsAdmin(true);
           setUser(users);
@@ -121,7 +127,7 @@ const LoginPage = () => {
           src={logo}
           alt="Logo"
           style={{
-            width: "10vw",
+            width: "8rem",
             height: "auto",
             maxWidth: "100%",
           }}
@@ -129,15 +135,15 @@ const LoginPage = () => {
       </div>
 
       <div
-        className="p-4 mx-4 shadow-lg form-bg"
+        className=" mx-4 shadow-lg form-bg"
         style={{
-          maxWidth: "600px",
+          maxWidth: "500px",
           width: "100%",
           boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
           position: "relative",
         }}
       >
-        <div className="text-center mt-5 mb-4" style={{ paddingTop: "20px" }}>
+        <div className="text-center mt-5 mb-4" style={{}}>
           <h2
             className="fw-bolder"
             style={{
@@ -151,7 +157,7 @@ const LoginPage = () => {
         </div>
         <form
           onSubmit={handleSubmit}
-          style={{ width: "350px" }}
+          style={{ width: "60%" }}
           className="mx-auto"
         >
           <div className="mb-3">
@@ -165,7 +171,7 @@ const LoginPage = () => {
               className="form-control"
               value={formData.emailOrMobile}
               onChange={handleChange}
-              placeholder="Enter email or mobile number"
+              placeholder="Enter your email or mobile number"
               style={{
                 borderRadius: "8px",
                 border: "none",

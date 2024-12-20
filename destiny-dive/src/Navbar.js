@@ -32,7 +32,7 @@ const Navbar = () => {
             src={logo}
             alt="Logo"
             style={{
-              width: "10vw",
+              width: "25vw",
               height: "auto",
               maxWidth: "150px",
             }}

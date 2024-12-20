@@ -6,23 +6,52 @@ import { FaCaretDown } from "react-icons/fa"; // Import caret icon
 import { FiMenu } from "react-icons/fi";
 import "./ProfilePage.css";
 import logo from "./images/navlogo.png";
+import star from "./images/star-img.png";
 import defaultProfilePic from "./images/default-profile.png";
 function ProfilePage() {
   const { user } = useContext(UserContext); // Access user from context
   const [profile, setProfile] = useState(user || {});
   const [image, setImage] = useState(""); // State to store uploaded image URL
+  const [editFields, setEditFields] = useState({}); // Track edit states for fields
 
   // States for "See More" functionality
   const [showMoreStatus, setShowMoreStatus] = useState(false);
   const [showMoreWishlist, setShowMoreWishlist] = useState(false);
 
   useEffect(() => {
-    // If no user in Context, retrieve from localStorage
-    const storedUser = JSON.parse(localStorage.getItem("user"));
+    console.log(user);
+    const storedUser = JSON.parse(localStorage.getItem("user")); // if there is no user in useContext
     if (storedUser) {
       setProfile(storedUser);
     }
   }, [user]);
+
+  useEffect(() => {
+    const storedImage = localStorage.getItem("profileImage");
+    if (storedImage) {
+      setImage(storedImage);
+    }
+  }, []);
+
+  const handleEditToggle = (field) => {
+    setEditFields((prev) => ({ ...prev, [field]: !prev[field] }));
+  };
+
+  const handleInputChange = (field, value) => {
+    setProfile((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSave = (field) => {
+    setEditFields((prev) => ({ ...prev, [field]: false }));
+    localStorage.setItem("user", JSON.stringify(profile));
+    // alert(`${field} updated successfully!`);
+  };
+
+  const handleCancel = (field) => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    setProfile((prev) => ({ ...prev, [field]: storedUser[field] }));
+    setEditFields((prev) => ({ ...prev, [field]: false }));
+  };
 
   const checkFieldType = (value) => {
     const emailRegex = /^\S+@\S+\.\S+$/; // Matches an email format
@@ -38,8 +67,8 @@ function ProfilePage() {
   };
   const handleLogout = () => {
     localStorage.removeItem("user");
-    user(null);
-    window.location.href = "/"; // Redirect to homepage
+    // user(null);
+    window.location.href = "/landing"; // Redirect to homepage
   };
   const { type, displayValue } = checkFieldType(profile.emailOrMobile || "");
 
@@ -206,7 +235,7 @@ function ProfilePage() {
               style={{ height: "100%" }}
             >
               {/* Profile Content */}
-              <div className="col-md-6 gap-4">
+              <div className="col-md-6 gap-4 mb-4 sm-mb-0">
                 <div className="card px-4 py-5 p-container">
                   <div className="d-block d-sm-flex justify-content-between align-items-center mb-3">
                     <img
@@ -237,80 +266,169 @@ function ProfilePage() {
 
                   {/* Fields */}
                   <div className="mb-4 p-3 border rounded">
+                    {/* Editable Fields */}
                     <div className="mb-3">
-                      <div className="d-flex justify-content-between align-items-center">
-                        <strong className="text-secondary">Your Name</strong>
-                        <button
-                          className="btn rounded-5 p-btn px-4 fw-semibold py-1 btn-sm"
-                          style={{ backgroundColor: "#e9ecef" }}
-                          onClick={() =>
-                            sendFieldValue("Your Name", profile.username)
-                          }
-                        >
-                          Edit
-                        </button>
-                      </div>
-                      <div>{profile.username || "N/A"}</div>
+                      <strong className="text-secondary">Your Name</strong>
+                      {editFields.username ? (
+                        <div className="d-flex align-items-center">
+                          <input
+                            type="text"
+                            className="form-control me-2"
+                            value={profile.username || ""}
+                            onChange={(e) =>
+                              handleInputChange("username", e.target.value)
+                            }
+                          />
+                          <button
+                            className="btn btn-success"
+                            onClick={() => handleSave("username")}
+                          >
+                            Save
+                          </button>
+                          <button
+                            className="btn btn-danger ms-2"
+                            onClick={() => handleCancel("username")}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="d-flex justify-content-between">
+                          <span>{profile.username || "N/A"}</span>
+                          <button
+                            className="btn rounded-5 p-btn px-4 fw-semibold py-1 btn-sm"
+                            style={{ backgroundColor: "#e9ecef" }}
+                            onClick={() => handleEditToggle("username")}
+                          >
+                            Edit
+                          </button>
+                        </div>
+                      )}
                     </div>
 
                     <div className="mb-3">
-                      <div className="d-flex justify-content-between align-items-center">
-                        <strong className="text-secondary">Email</strong>
-                        <button
-                          className="btn rounded-5 p-btn px-4 fw-semibold py-1 btn-sm"
-                          style={{ backgroundColor: "#e9ecef" }}
-                          onClick={() =>
-                            sendFieldValue(
-                              "Email",
-                              type === "Email" ? displayValue : "N/A"
-                            )
-                          }
-                        >
-                          Edit
-                        </button>
-                      </div>
-                      <div>{(type === "Email" && displayValue) || "N/A"}</div>
+                      <strong className="text-secondary">Email</strong>
+                      {editFields.email ? (
+                        <div className="d-flex align-items-center">
+                          <input
+                            type="email"
+                            className="form-control me-2"
+                            value={profile.email || ""}
+                            onChange={(e) =>
+                              handleInputChange("email", e.target.value)
+                            }
+                          />
+                          <button
+                            className="btn btn-success"
+                            onClick={() => handleSave("email")}
+                          >
+                            Save
+                          </button>
+                          <button
+                            className="btn btn-danger ms-2"
+                            onClick={() => handleCancel("email")}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="d-flex justify-content-between">
+                          <span>{profile.email || "N/A"}</span>
+                          <button
+                            className="btn rounded-5 p-btn px-4 fw-semibold py-1 btn-sm"
+                            style={{ backgroundColor: "#e9ecef" }}
+                            onClick={() => handleEditToggle("email")}
+                          >
+                            Edit
+                          </button>
+                        </div>
+                      )}
                     </div>
 
                     <div className="mb-3">
-                      <div className="d-flex justify-content-between align-items-center">
-                        <strong className="text-secondary">Phone Number</strong>
-                        <button
-                          className="btn rounded-5 p-btn px-4 fw-semibold py-1 btn-sm"
-                          style={{ backgroundColor: "#e9ecef" }}
-                          onClick={() =>
-                            sendFieldValue(
-                              "Phone Number",
-                              type === "Phone" ? displayValue : "N/A"
-                            )
-                          }
-                        >
-                          Edit
-                        </button>
-                      </div>
-                      <div>{(type === "Phone" && displayValue) || "N/A"}</div>
+                      <strong className="text-secondary">Phone Number</strong>
+                      {editFields.phoneNumber ? (
+                        <div className="d-flex align-items-center">
+                          <input
+                            type="text"
+                            className="form-control me-2"
+                            value={profile.phoneNumber || ""}
+                            onChange={(e) =>
+                              handleInputChange("phoneNumber", e.target.value)
+                            }
+                          />
+                          <button
+                            className="btn btn-success"
+                            onClick={() => handleSave("phoneNumber")}
+                          >
+                            Save
+                          </button>
+                          <button
+                            className="btn btn-danger ms-2"
+                            onClick={() => handleCancel("phoneNumber")}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="d-flex justify-content-between">
+                          <span>{profile.phoneNumber || "N/A"}</span>
+                          <button
+                            className="btn rounded-5 p-btn px-4 fw-semibold py-1 btn-sm"
+                            style={{ backgroundColor: "#e9ecef" }}
+                            onClick={() => handleEditToggle("phoneNumber")}
+                          >
+                            Edit
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
 
+                  {/* About Section */}
                   {/* About Section */}
                   <div className="mb-4 p-3 border rounded">
                     <div className="d-flex justify-content-between align-items-center">
                       <strong className="text-dark fs-5">
                         About{" "}
-                        <span className="text-primary">
-                          {" "}
-                          {profile.username}{" "}
-                        </span>
+                        <span className="text-primary">{profile.username}</span>
                       </strong>
-                      <button
-                        className="btn rounded-5 p-btn px-4 fw-semibold py-1 btn-sm"
-                        style={{ backgroundColor: "#e9ecef" }}
-                        onClick={() => sendFieldValue("About", profile.about)}
-                      >
-                        Edit
-                      </button>
+                      {!editFields.about ? (
+                        <button
+                          className="btn rounded-5 p-btn px-4 fw-semibold py-1 btn-sm"
+                          style={{ backgroundColor: "#e9ecef" }}
+                          onClick={() => handleEditToggle("about")}
+                        >
+                          Edit
+                        </button>
+                      ) : (
+                        <div className="d-flex gap-2">
+                          <button
+                            className="btn btn-success px-4 fw-semibold py-1 btn-sm"
+                            onClick={() => handleSave("about")}
+                          >
+                            Save
+                          </button>
+                          <button
+                            className="btn btn-danger px-4 fw-semibold py-1 btn-sm"
+                            onClick={() => handleCancel("about")}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      )}
                     </div>
-                    <div>{profile.about || "N/A"}</div>
+                    {!editFields.about ? (
+                      <div>{profile.about || "N/A"}</div>
+                    ) : (
+                      <textarea
+                        className="form-control mt-3"
+                        value={profile.about || ""}
+                        onChange={(e) =>
+                          handleInputChange("about", e.target.value)
+                        }
+                      />
+                    )}
                   </div>
 
                   {/* Application Forms */}
@@ -337,16 +455,27 @@ function ProfilePage() {
               </div>
 
               {/* College Info */}
-              <div className="col-md-6 gap-4">
+              <div className="col-md-6 gap-4 ">
                 <div className="card px-4 py-5 p-container">
-                  <h4 className="mb-4">College Details</h4>
-                  <div className="d-flex justify-content-between">
+                  <div className="d-flex justify-content-between p-3 border-custom m-3 mx-auto">
+                    <div className="w-75 ">
+                      <h5 className="mb-4 text-dark fw-bold ">
+                        College Details
+                      </h5>
+                      <p>
+                        This are the professional details shown to users in the
+                        app.
+                      </p>
+                    </div>
                     <img
-                      src="https://via.placeholder.com/150" // Placeholder image
+                      src={star} // Placeholder image
                       alt="College"
                       className="rounded"
-                      style={{ width: "100px", height: "150px" }}
+                      style={{ width: "50px", height: "50px" }}
                     />
+                  </div>
+
+                  <div className="d-flex justify-content-between">
                     <div className="d-flex flex-column justify-content-center">
                       <strong>PSG Institutions, Coimbatore</strong>
                       <span className="text-secondary">Tamil Nadu, India</span>

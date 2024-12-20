@@ -74,7 +74,6 @@ const CollegeList = () => {
         setLoading(false);
       }
     };
-
     fetchColleges();
   }, []);
 
@@ -82,47 +81,47 @@ const CollegeList = () => {
   const filterColleges = () => {
     let filtered = colleges;
 
-    // Apply form data filters
-    // if (selectedType) {
-    //   filtered = filtered.filter((college) =>
-    //     college.type.toLowerCase().includes(selectedType.toLowerCase())
-    //   );
-    // }
+    //Apply form data filters
+    if (selectedType) {
+      filtered = filtered.filter((college) =>
+        college.type.toLowerCase().includes(selectedType.toLowerCase())
+      );
+    }
 
-    // if (selectedDegree) {
-    //   filtered = filtered.filter((college) =>
-    //     college.degree.some(
-    //       (degree) =>
-    //         typeof degree === "string" &&
-    //         degree.toLowerCase().includes(selectedDegree.toLowerCase())
-    //     )
-    //   );
-    // }
-    // if (selectedType === "Indian") {
-    //   if (selectedState) {
-    //     filtered = filtered.filter((college) =>
-    //       college.location.toLowerCase().includes(selectedState.toLowerCase())
-    //     );
-    //   }
-    // }
+    if (selectedDegree) {
+      filtered = filtered.filter((college) =>
+        college.degree.some(
+          (degree) =>
+            typeof degree === "string" &&
+            degree.toLowerCase().includes(selectedDegree.toLowerCase())
+        )
+      );
+    }
+    if (selectedType === "Indian") {
+      if (selectedState) {
+        filtered = filtered.filter((college) =>
+          college.location.toLowerCase().includes(selectedState.toLowerCase())
+        );
+      }
+    }
 
-    // if (selectedPercentage) {
-    //   filtered = filtered.filter(
-    //     (college) => college.minPercentage <= selectedPercentage
-    //   );
-    // }
+    if (selectedPercentage) {
+      filtered = filtered.filter(
+        (college) => college.minPercentage <= selectedPercentage
+      );
+    }
 
-    // if (selectedMajor) {
-    //   filtered = filtered.filter((college) =>
-    //     college.recommendedCourses.some(
-    //       (recommendedCourses) =>
-    //         typeof recommendedCourses === "string" &&
-    //         recommendedCourses
-    //           .toLowerCase()
-    //           .includes(selectedMajor.toLowerCase())
-    //     )
-    //   );
-    // }
+    if (selectedMajor) {
+      filtered = filtered.filter((college) =>
+        college.recommendedCourses.some(
+          (recommendedCourses) =>
+            typeof recommendedCourses === "string" &&
+            recommendedCourses
+              .toLowerCase()
+              .includes(selectedMajor.toLowerCase())
+        )
+      );
+    }
 
     // Apply search term if any
     if (searchTerm) {
@@ -233,7 +232,15 @@ const CollegeList = () => {
             onClick={() => setViewMoreState(!viewMoreState)}
           >
             {viewMoreState ? "View Less" : "View More"}
-            <img src={continue_btn} style={{ width: "2vw", height: "auto" }} />
+            <img
+              src={continue_btn}
+              className="ms-1"
+              style={{
+                maxWidth: "2rem",
+                //minwidth: "4rem",
+                height: "auto",
+              }}
+            />
           </button>
         </div>
       )}
@@ -488,20 +495,32 @@ const CollegeList = () => {
                 </small>
               </button>
               {showDurationFilter && (
-                <input
-                  type="text"
+                // <input
+                //   type="text"
+                //   className="form-control"
+                //   placeholder="Duration (e.g., 12 months)"
+                //   value={selectedDuration}
+                //   onChange={(e) => setSelectedDuration(e.target.value)}
+                // />
+                <select
                   className="form-control"
-                  placeholder="Duration (e.g., 12 months)"
                   value={selectedDuration}
                   onChange={(e) => setSelectedDuration(e.target.value)}
-                />
+                >
+                  <option value="">-- select duration --</option>
+                  <option value="6 months">6 months</option>
+                  <option value="12 months">12 months</option>
+                  <option value="24 months">24 months</option>
+                  <option value="36 months">36 months</option>
+                  <option value="48 months">48 months</option>
+                </select>
               )}
             </div>
           </div>
 
           {/* Colleges List */}
           <div className="col-md-9">
-            <div className="mb-4 d-none d-md-block">
+            <div className="mb-4  d-block">
               <div className="input-group">
                 <span className="input-group-text">
                   <FaSearch />
@@ -520,17 +539,17 @@ const CollegeList = () => {
               <p className="count-display  align-items-center gap-2">
                 <img src={dream} alt="Dream Icon" className="icon" />
                 <span className="count fs-4">{dreamCount}</span>
-                <strong className="fs-4 fw-medium">Dream</strong>
+                <strong className="fs-4 fw-medium">Hope</strong>
               </p>
               <p className="count-display  align-items-center gap-2">
                 <img src={reach} alt="Reach Icon" className="icon" />
                 <span className="count fs-4">{reachCount}</span>
-                <strong className="fs-4 fw-medium">Reach</strong>
+                <strong className="fs-4 fw-medium">Approach</strong>
               </p>
               <p className="count-display  align-items-center gap-2">
                 <img src={safe} alt="Safe Icon" className="icon" />
                 <span className="count fs-4">{safeCount}</span>
-                <strong className="fs-4 fw-medium">Safe</strong>
+                <strong className="fs-4 fw-medium">Secured</strong>
               </p>
             </div>
             <div className="clgs p-3">

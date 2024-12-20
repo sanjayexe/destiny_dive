@@ -101,15 +101,8 @@
       "type": "Indian",
       "chances": 100,
       "minPercentage": 90,
-      "degree": [
-        "Engineering",
-        "Science",
-        "mba"
-      ],
-      "recommendedCourses": [
-        "Computer Science",
-        "Mechanical Engineering"
-      ],
+      "degree": ["Engineering", "Science", "mba"],
+      "recommendedCourses": ["Computer Science", "Mechanical Engineering"],
       "universityType": "Autonomous",
       "tuitionFee": 20000,
       "courseDuration": "48 months"
@@ -121,14 +114,11 @@
       "type": "Indian",
       "chances": 50,
       "minPercentage": 85,
-      "degree": [
-        "Engineering",
-        "Technology",
-        "mba"
-      ],
+      "degree": ["Engineering", "Technology", "mba"],
       "recommendedCourses": [
         "Civil Engineering",
-        "Electrical Engineering"
+        "Electrical Engineering",
+        "MBA"
       ],
       "universityType": "Autonomous",
       "tuitionFee": 18000,
@@ -141,14 +131,8 @@
       "type": "Indian",
       "chances": 0,
       "minPercentage": 75,
-      "degree": [
-        "Management",
-        "Bachelors"
-      ],
-      "recommendedCourses": [
-        "MBA",
-        "PGDM"
-      ],
+      "degree": ["Management", "Bachelors"],
+      "recommendedCourses": ["MBA", "PGDM"],
       "universityType": "Autonomous",
       "tuitionFee": 25000,
       "courseDuration": "24 months"
@@ -160,16 +144,8 @@
       "type": "Abroad",
       "chances": 0,
       "minPercentage": 95,
-      "degree": [
-        "Engineering",
-        "Business",
-        "mba"
-      ],
-      "recommendedCourses": [
-        "MBA",
-        "Data Science",
-        "Law"
-      ],
+      "degree": ["Engineering", "Business", "mba"],
+      "recommendedCourses": ["MBA", "Data Science", "Law"],
       "universityType": "Private",
       "tuitionFee": 50000,
       "courseDuration": "24 months"
@@ -181,14 +157,8 @@
       "type": "Abroad",
       "chances": 0,
       "minPercentage": 95,
-      "degree": [
-        "Engineering",
-        "Business"
-      ],
-      "recommendedCourses": [
-        "MBA",
-        "Data Science"
-      ],
+      "degree": ["Engineering", "Business"],
+      "recommendedCourses": ["MBA", "Data Science"],
       "universityType": "Private",
       "tuitionFee": 50000,
       "courseDuration": "24 months"
@@ -200,17 +170,8 @@
       "type": "Abroad",
       "chances": 0,
       "minPercentage": 95,
-      "degree": [
-        "Engineering",
-        "Business",
-        "Bachelors",
-        "MBA",
-        "Law"
-      ],
-      "recommendedCourses": [
-        "MBA",
-        "Data Science"
-      ],
+      "degree": ["Engineering", "Business", "Bachelors", "MBA", "Law"],
+      "recommendedCourses": ["MBA", "Data Science"],
       "universityType": "Private",
       "tuitionFee": 50000,
       "courseDuration": "24 months"
@@ -222,14 +183,8 @@
       "type": "Abroad",
       "chances": 0,
       "minPercentage": 95,
-      "degree": [
-        "Engineering",
-        "Business"
-      ],
-      "recommendedCourses": [
-        "MBA",
-        "Data Science"
-      ],
+      "degree": ["Engineering", "Business"],
+      "recommendedCourses": ["MBA", "Data Science"],
       "universityType": "Private",
       "tuitionFee": 50000,
       "courseDuration": "24 months"
@@ -241,14 +196,8 @@
       "type": "Abroad",
       "chances": 0,
       "minPercentage": 95,
-      "degree": [
-        "Engineering",
-        "Business"
-      ],
-      "recommendedCourses": [
-        "MBA",
-        "Data Science"
-      ],
+      "degree": ["Engineering", "Business"],
+      "recommendedCourses": ["MBA", "Data Science"],
       "universityType": "Private",
       "tuitionFee": 50000,
       "courseDuration": "24 months"
@@ -260,14 +209,8 @@
       "type": "Abroad",
       "chances": 50,
       "minPercentage": 93,
-      "degree": [
-        "Law",
-        "Science"
-      ],
-      "recommendedCourses": [
-        "Law",
-        "Physics"
-      ],
+      "degree": ["Law", "Science"],
+      "recommendedCourses": ["Law", "Physics"],
       "universityType": "Private",
       "tuitionFee": 45000,
       "courseDuration": "36 months"
@@ -279,14 +222,8 @@
       "type": "Abroad",
       "chances": 100,
       "minPercentage": 92,
-      "degree": [
-        "Science",
-        "Technology"
-      ],
-      "recommendedCourses": [
-        "Physics",
-        "Mathematics"
-      ],
+      "degree": ["Science", "Technology"],
+      "recommendedCourses": ["Physics", "Mathematics"],
       "universityType": "Public",
       "tuitionFee": 35000,
       "courseDuration": "36 months"

@@ -43,7 +43,7 @@ const Landing = () => {
       navigate("/university", { state: { type: "Abroad" } });
     }
     if (title == "Accommodations") {
-      navigate("/university");
+      navigate("/accommodation");
     }
     if (title == "Scholarships") {
       navigate("/university");

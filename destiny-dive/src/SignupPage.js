@@ -98,18 +98,18 @@ const SignupPage = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        await axios.post("http://localhost:4501/users", {
+        await axios.post("http://localhost:4503/api/users", {
           username: formData.username,
           emailOrMobile: formData.emailOrMobile,
           password: formData.password,
           //otp: formData.otp,
         });
 
-        alert("Signup successful! Redirecting to login...");
+        // alert("Signup successful! Redirecting to login...");
         navigate("/login"); // Redirect to login page
       } catch (error) {
         console.error("Error signing up:", error);
-        alert("An error occurred while signing up. Please try again.");
+        alert("Email/mobile number already exsist ! try new credentials");
       }
     }
   };
@@ -139,7 +139,7 @@ const SignupPage = () => {
             src={logo}
             alt="Logo"
             style={{
-              width: "10vw",
+              width: "8rem",
               height: "auto",
               maxWidth: "100%",
             }}
@@ -148,7 +148,7 @@ const SignupPage = () => {
         <div
           className="shadow-lg form-bg mx-4"
           style={{
-            maxWidth: "600px",
+            maxWidth: "500px",
             width: "100%",
             boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
             position: "relative",

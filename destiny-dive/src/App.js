@@ -17,6 +17,7 @@ import CollegeDetails from "./CollegeDetails";
 import CollegeApplicationForm from "./CollegeApplicationForm";
 import ProfilePage from "./ProfilePage";
 import AdminDashboard from "./AdminDashboard";
+import AccommodationApp from "./AccommodationApp";
 const App = () => {
   return (
     <BrowserRouter>
@@ -32,6 +33,7 @@ const App = () => {
           <Route path="/appform" element={<CollegeApplicationForm />} />
           <Route path="/ProfilePage" element={<ProfilePage />} />
           <Route path="/adminDashboard" element={<AdminDashboard />} />
+          <Route path="/accommodation" element={<AccommodationApp />} />
         </Routes>
       </UserProvider>
       <Outlet />
