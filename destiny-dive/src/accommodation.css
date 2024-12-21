@@ -1,0 +1,13 @@
+.continue-btn {
+  background-color: rgba(110, 149, 194, 1);
+  color: white;
+  border: none;
+  font-size: 1.25rem;
+  padding: 0.8rem 2rem;
+  transition: all 0.3s ease;
+  width: fit-content;
+}
+
+.continue-btn:hover {
+  transform: scale(1.05);
+}
