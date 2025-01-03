@@ -365,16 +365,11 @@ const CollegeList = () => {
                   className={`star ${showCountryFilter ? "filled" : ""}`}
                   onClick={() => setShowCountryFilter(!showCountryFilter)}
                 >
-                  ★{" "}
-                  <span className="fs-6 fw-semibold text-dark">
-                    Country or State
-                  </span>{" "}
+                  ★ <span className="fs-6 fw-semibold text-dark">Country</span>{" "}
                   <br />
                 </div>
 
-                <small className="text-muted ms-4">
-                  Filter by country or state
-                </small>
+                <small className="text-muted ms-4">Filter by country</small>
               </button>
               {showCountryFilter && (
                 <div>
@@ -383,7 +378,7 @@ const CollegeList = () => {
                     value={selectedCountry}
                     onChange={(e) => setSelectedCountry(e.target.value)}
                   >
-                    <option value="">Select Country/State</option>
+                    <option value="">Select Country</option>
                     <option value="United States">United States</option>
                     <option value="Canada">Canada</option>
                     <option value="India">India</option>
@@ -562,7 +557,7 @@ const CollegeList = () => {
                   />{" "}
                   <h4 className="text-dark fw-medium">
                     {" "}
-                    <span className="count  ">{dreamCount}</span> Dream
+                    <span className="count  ">{dreamCount}</span> Hope
                     Universities
                   </h4>
                 </div>
@@ -584,7 +579,7 @@ const CollegeList = () => {
                   />{" "}
                   <h4 className="text-dark fw-medium">
                     {" "}
-                    <span className="count  ">{reachCount}</span> Reach
+                    <span className="count  ">{reachCount}</span> Approach
                     Universities
                   </h4>
                 </div>
@@ -605,7 +600,7 @@ const CollegeList = () => {
                   />{" "}
                   <h4 className="text-dark fw-medium">
                     {" "}
-                    <span className="count  ">{safeCount}</span> Safe
+                    <span className="count  ">{safeCount}</span> Secure
                     Universities
                   </h4>
                 </div>

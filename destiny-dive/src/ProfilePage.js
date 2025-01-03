@@ -8,6 +8,8 @@ import "./ProfilePage.css";
 import logo from "./images/navlogo.png";
 import star from "./images/star-img.png";
 import defaultProfilePic from "./images/default-profile.png";
+import axios from "axios";
+
 function ProfilePage() {
   const { user } = useContext(UserContext); // Access user from context
   const [profile, setProfile] = useState(user || {});
@@ -41,10 +43,28 @@ function ProfilePage() {
     setProfile((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSave = (field) => {
-    setEditFields((prev) => ({ ...prev, [field]: false }));
-    localStorage.setItem("user", JSON.stringify(profile));
-    // alert(`${field} updated successfully!`);
+  const handleSave = async (field) => {
+    if (!user || !user._id) {
+      console.error("User ID is not defined");
+      return;
+    }
+
+    try {
+      const response = await axios.put(
+        `http://localhost:4503/api/users/${user._id}`,
+        {
+          [field]: profile[field],
+        }
+      );
+      const updatedUser = response.data;
+      setProfile(updatedUser);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      setEditFields((prev) => ({ ...prev, [field]: false }));
+      alert(`${field} updated successfully!`);
+    } catch (error) {
+      console.error("Error updating user:", error);
+      // Handle error (e.g., show an error message to the user)
+    }
   };
 
   const handleCancel = (field) => {

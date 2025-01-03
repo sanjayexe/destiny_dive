@@ -46,7 +46,7 @@ const Landing = () => {
       navigate("/accommodation");
     }
     if (title == "Scholarships") {
-      navigate("/university");
+      navigate("/scholarship");
     }
   };
   const headerItems = [

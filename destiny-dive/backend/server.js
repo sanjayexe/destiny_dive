@@ -19,6 +19,9 @@ mongoose
 // Use routes
 app.use("/api", authRoutes);
 
+const userRoutes = require("./routes/userRoutes");
+app.use("/api", userRoutes);
+
 // Start server
 const port = process.env.PORT || 4503;
 app.listen(port, () => {
