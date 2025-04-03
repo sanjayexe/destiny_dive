@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        NODEJS_HOME = tool 'node-18' // Set NodeJS version configured in Jenkins
+        NODEJS_HOME = tool 'node-18'
         PATH = "${NODEJS_HOME}/bin:${env.PATH}"
     }
 
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/sanjayexe/destiny_dive.git'
+                git branch: 'main', url: 'https://github.com/sanjayexe/destiny_dive'
             }
         }
 
@@ -25,11 +25,11 @@ pipeline {
             }
         }
 
-        stage('Deploy to Server') {
+        stage('Deploy to Apache/Nginx') {
             steps {
                 sh '''
-                rm -rf /var/www/html/*
-                cp -r build/* /var/www/html/
+                sudo rm -rf /var/www/html/*
+                sudo cp -r build/* /var/www/html/
                 '''
             }
         }
