@@ -33,7 +33,18 @@ pipeline {
                 '''
             }
         }
+        stage('Deploy Locally') {
+    steps {
+        sh '''
+        npm install -g serve
+        serve -s build -l 3000
+        '''
     }
+}
+
+    }
+
+    
 
     post {
         success {
