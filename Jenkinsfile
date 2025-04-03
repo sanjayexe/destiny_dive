@@ -25,26 +25,16 @@ pipeline {
             }
         }
 
-        stage('Deploy to Apache/Nginx') {
+        stage('Deploy to Apache') {
             steps {
                 sh '''
                 sudo rm -rf /var/www/html/*
                 sudo cp -r build/* /var/www/html/
+                sudo systemctl restart apache2
                 '''
             }
         }
-        stage('Deploy Locally') {
-    steps {
-        sh '''
-        npm install -g serve
-        serve -s build -l 3000
-        '''
     }
-}
-
-    }
-
-    
 
     post {
         success {
