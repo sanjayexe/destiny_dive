@@ -17,7 +17,6 @@ import logo from "./images/navlogo.png";
 import star from "./images/star-img.png";
 import defaultProfilePic from "./images/default-profile.png";
 import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 function ProfilePage() {
   const { user, setUser } = useContext(UserContext); // Access user from context
@@ -247,119 +246,620 @@ function ProfilePage() {
   };
 
   return (
-    <div
-      className="container py-5"
-      style={{ fontFamily: "Inter, sans-serif", maxWidth: 900 }}
-    >
-      <div
-        className="card shadow-lg border-0 rounded-4 p-4 mx-auto"
-        style={{ background: "#fff" }}
-      >
-        <div className="text-center mb-4">
-          <img
-            src={image || user?.profileImage || defaultProfilePic}
-            alt="Profile"
-            className="rounded-circle border border-3 border-primary shadow"
+    <div className="container-fluid px-5">
+      <div>
+        {/* Navbar */}
+        <nav className="navbar navbar-light bg-light px-3">
+          <button
+            className="btn btn-light"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebarOffcanvas"
+            aria-controls="sidebarOffcanvas"
+          >
+            <FiMenu size={24} />
+          </button>
+
+          <div className="me-auto">
+            {" "}
+            <Link to="/" className="navbar-brand">
+              <img
+                src={logo}
+                alt="Logo"
+                style={{
+                  width: "10vw",
+                  height: "auto",
+                  maxWidth: "100%",
+                }}
+              />
+            </Link>
+          </div>
+          <ul
+            className="navbar-nav px-2 me-2 rounded-3 "
             style={{
-              width: 120,
-              height: 120,
-              objectFit: "cover",
-              marginBottom: 16,
+              border: "1px solid #ccc",
             }}
-          />
-          <div className="mt-2">
-            <label
-              htmlFor="fileUpload"
-              className="btn btn-outline-primary rounded-3 px-4 py-2 fw-semibold shadow-sm"
-            >
-              Upload Photo
-            </label>
-            <input
-              type="file"
-              id="fileUpload"
-              accept="image/*"
-              onChange={handleFileUpload}
-              style={{ display: "none" }}
-              disabled={loading}
+          >
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle d-flex justify-content-between align-items-center fw-semibold"
+                href="#"
+                id="userDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img
+                  src={
+                    image ||
+                    user?.profileImage ||
+                    profile?.profileImage ||
+                    defaultProfilePic
+                  }
+                  alt="Profile"
+                  className="rounded-3"
+                  style={{
+                    width: "60px",
+                    height: "60px",
+                    objectFit: "cover",
+                    marginRight: "10px",
+                  }}
+                />
+                <span style={{ marginLeft: "5px" }}>
+                  Welcome Back, <br /> {profile.username || "User"}
+                </span>
+              </a>
+              <div className="dropdown-menu" aria-labelledby="userDropdown">
+                <button
+                  className="dropdown-item text-danger"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </div>
+            </li>
+          </ul>
+        </nav>
+
+        {/* Sidebar Offcanvas */}
+        <div
+          className="offcanvas offcanvas-start"
+          tabIndex="-1"
+          id="sidebarOffcanvas"
+          aria-labelledby="sidebarOffcanvasLabel"
+        >
+          <div className="offcanvas-header">
+            <img
+              src={logo}
+              alt="Logo"
+              style={{
+                width: "10vw",
+                height: "auto",
+                maxWidth: "100%",
+              }}
             />
-          </div>
-        </div>
-        <h3 className="fw-bold text-primary text-center mb-4">My Profile</h3>
-        <form>
-          <div className="row g-4">
-            <div className="col-md-6">
-              <div className="form-floating mb-3">
-                <input
-                  type="text"
-                  className="form-control rounded-3"
-                  id="username"
-                  value={profile.username || ""}
-                  onChange={(e) =>
-                    handleInputChange("username", e.target.value)
-                  }
-                  placeholder="Your Name"
-                  disabled={loading}
-                />
-                <label htmlFor="username">Your Name</label>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="form-floating mb-3">
-                <input
-                  type="email"
-                  className="form-control rounded-3"
-                  id="email"
-                  value={profile.email || ""}
-                  onChange={(e) => handleInputChange("email", e.target.value)}
-                  placeholder="Email"
-                  disabled={loading}
-                />
-                <label htmlFor="email">Email</label>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="form-floating mb-3">
-                <input
-                  type="tel"
-                  className="form-control rounded-3"
-                  id="phoneNumber"
-                  value={profile.phoneNumber || ""}
-                  onChange={(e) =>
-                    handleInputChange("phoneNumber", e.target.value)
-                  }
-                  placeholder="Phone Number"
-                  disabled={loading}
-                />
-                <label htmlFor="phoneNumber">Phone Number</label>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="form-floating mb-3">
-                <input
-                  type="text"
-                  className="form-control rounded-3"
-                  id="about"
-                  value={profile.about || ""}
-                  onChange={(e) => handleInputChange("about", e.target.value)}
-                  placeholder="About"
-                  disabled={loading}
-                />
-                <label htmlFor="about">About</label>
-              </div>
-            </div>
-          </div>
-          <div className="text-center mt-4">
             <button
               type="button"
-              className="btn btn-primary rounded-3 px-5 py-2 fw-bold shadow"
-              style={{ background: "#2563eb" }}
-              onClick={() => handleSave("all")}
-              disabled={loading}
-            >
-              {loading ? "Saving..." : "Save Changes"}
+              className="btn-close"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div className="offcanvas-body d-flex flex-column align-items-center py-4">
+            <div className="d-flex flex-column gap-4 w-100">
+              <button className="btn btn-light d-flex align-items-center gap-2">
+                <BsChat /> Chat
+              </button>
+              <button className="btn btn-light d-flex align-items-center gap-2">
+                <BsTelephone /> Call
+              </button>
+              <button className="btn btn-light d-flex align-items-center gap-2">
+                <BsQuestionCircle /> Questions
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Error Display */}
+        {error && (
+          <div
+            className="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            {error}
+            <button
+              type="button"
+              className="btn-close"
+              onClick={() => setError("")}
+            ></button>
+          </div>
+        )}
+
+        <div
+          className="container dashboard rounded-4 "
+          style={{
+            padding: "20px",
+            minHeight: "30vh",
+          }}
+        >
+          <div className="d-flex justify-content-between align-items-center">
+            <h3 className="text-white">My Profile</h3>
+            <button className="btn btn-light">
+              {loading ? "Saving..." : "My Data"}
             </button>
           </div>
-        </form>
+        </div>
+        <div className="container px-sm-5 " style={{ marginTop: "-15vh" }}>
+          {/* Dashboard content */}
+          <div className="row container  mx-auto justify-content-center  p-4">
+            <div
+              className="d-block d-md-flex  w-100 gap-4"
+              style={{ height: "100%" }}
+            >
+              {/* Profile Content */}
+              <div className="col-md-6 gap-4 mb-4 sm-mb-0">
+                <div className="card px-4 py-5 p-container">
+                  <div className="d-block d-sm-flex justify-content-between align-items-center mb-3">
+                    <img
+                      src={
+                        image ||
+                        user?.profileImage ||
+                        user?.picture ||
+                        profile?.profileImage ||
+                        profile?.picture ||
+                        "https://via.placeholder.com/80"
+                      } // Placeholder avatar
+                      alt="profile"
+                      className="rounded-circle"
+                      style={{ width: "110px", height: "110px" }}
+                    />
+                    <div
+                      className="p-btn ms-auto btn-sm rounded-5"
+                      style={{ width: "fit-content" }}
+                    >
+                      <label
+                        htmlFor="fileUpload"
+                        className={`btn fw-semibold px-3 ${
+                          loading ? "disabled" : ""
+                        }`}
+                        style={{ opacity: loading ? 0.6 : 1 }}
+                      >
+                        {loading ? "Uploading..." : "Upload Photo"}
+                      </label>
+                      <input
+                        type="file"
+                        id="fileUpload"
+                        accept="image/*"
+                        onChange={handleFileUpload}
+                        style={{ display: "none" }}
+                        disabled={loading}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Card Content */}
+                  <>
+                    {/* Name and Contact Fields */}
+                    {/* Name Field */}
+                    <div className="mb-4 p-3 border rounded">
+                      <div className="mb-3">
+                        <strong className="text-secondary d-flex align-items-center">
+                          <FaUser className="me-2" />
+                          Your Name
+                        </strong>
+                        {editFields.username ? (
+                          <div className="d-flex align-items-center">
+                            <input
+                              type="text"
+                              className="form-control me-2"
+                              value={profile.username || ""}
+                              onChange={(e) =>
+                                handleInputChange("username", e.target.value)
+                              }
+                              placeholder="Enter your name"
+                              disabled={loading}
+                            />
+                            <button
+                              className="btn btn-success btn-sm"
+                              onClick={() => handleSave("username")}
+                              disabled={loading || !profile.username?.trim()}
+                            >
+                              <FaSave />
+                            </button>
+                            <button
+                              className="btn btn-danger btn-sm ms-2"
+                              onClick={() => handleCancel("username")}
+                              disabled={loading}
+                            >
+                              <FaTimes />
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="d-flex justify-content-between">
+                            <span>{profile.username || "N/A"}</span>
+                            <button
+                              className="btn rounded-5 p-btn px-4 fw-semibold py-1 btn-sm"
+                              style={{ backgroundColor: "#e9ecef" }}
+                              onClick={() => handleEditToggle("username")}
+                              disabled={loading}
+                            >
+                              <FaEdit className="me-1" />
+                              Edit
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Contact Information Section */}
+                    <div className="mb-4 p-3 border rounded">
+                      <strong className="text-secondary d-flex align-items-center mb-3">
+                        <FaEnvelope className="me-2" />
+                        Contact Information
+                      </strong>
+                      {/* Primary Contact (what user signed up with) */}
+                      {(profile.email || profile.phoneNumber) && (
+                        <div className="mb-3 p-2 bg-light rounded">
+                          <div className="d-flex justify-content-between align-items-center">
+                            <div>
+                              <strong className="text-secondary d-flex align-items-center">
+                                {profile.email ? (
+                                  <FaEnvelope className="me-2" />
+                                ) : (
+                                  <FaPhone className="me-2" />
+                                )}
+                                {profile.email ? "Email" : "Phone Number"}
+                              </strong>
+                              <div className="mt-1">
+                                <span className="fw-semibold">
+                                  {profile.email || profile.phoneNumber}
+                                </span>
+                                <br />
+                                <small className="text-success">
+                                  ✓ Primary contact (used for signup)
+                                </small>
+                              </div>
+                            </div>
+                            <button
+                              className="btn rounded-5 p-btn px-3 fw-semibold py-1 btn-sm"
+                              style={{ backgroundColor: "#e9ecef" }}
+                              onClick={() =>
+                                handleEditToggle(
+                                  profile.email ? "email" : "phoneNumber"
+                                )
+                              }
+                              disabled={loading}
+                            >
+                              <FaEdit className="me-1" />
+                              Edit
+                            </button>
+                          </div>
+                          {/* Edit mode for primary contact */}
+                          {editFields[
+                            profile.email ? "email" : "phoneNumber"
+                          ] && (
+                            <div className="d-flex align-items-center mt-2">
+                              <input
+                                type={profile.email ? "email" : "tel"}
+                                className="form-control me-2"
+                                value={
+                                  profile[
+                                    profile.email ? "email" : "phoneNumber"
+                                  ] || ""
+                                }
+                                onChange={(e) =>
+                                  handleInputChange(
+                                    profile.email ? "email" : "phoneNumber",
+                                    e.target.value
+                                  )
+                                }
+                                placeholder={`Enter your ${
+                                  profile.email ? "email" : "phone number"
+                                }`}
+                                disabled={loading}
+                              />
+                              <button
+                                className="btn btn-success btn-sm"
+                                onClick={() =>
+                                  handleSave(
+                                    profile.email ? "email" : "phoneNumber"
+                                  )
+                                }
+                                disabled={
+                                  loading ||
+                                  !profile[
+                                    profile.email ? "email" : "phoneNumber"
+                                  ]?.trim()
+                                }
+                              >
+                                <FaSave />
+                              </button>
+                              <button
+                                className="btn btn-danger btn-sm ms-2"
+                                onClick={() =>
+                                  handleCancel(
+                                    profile.email ? "email" : "phoneNumber"
+                                  )
+                                }
+                                disabled={loading}
+                              >
+                                <FaTimes />
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      {/* Secondary Contact (optional) */}
+                      <div className="mb-3">
+                        <strong className="text-secondary d-flex align-items-center">
+                          {!profile.email ? (
+                            <FaEnvelope className="me-2" />
+                          ) : (
+                            <FaPhone className="me-2" />
+                          )}
+                          Add {!profile.email ? "Email" : "Phone Number"}{" "}
+                          (Optional)
+                        </strong>
+                        <div className="d-flex justify-content-between align-items-center">
+                          <div>
+                            <span
+                              className={
+                                !profile[
+                                  !profile.email ? "email" : "phoneNumber"
+                                ]
+                                  ? "text-muted"
+                                  : "fw-semibold"
+                              }
+                            >
+                              {profile[
+                                !profile.email ? "email" : "phoneNumber"
+                              ] || "Not added yet"}
+                            </span>
+                            {!profile[
+                              !profile.email ? "email" : "phoneNumber"
+                            ] && (
+                              <small className="text-muted">
+                                Add an additional contact method for better
+                                communication
+                              </small>
+                            )}
+                          </div>
+                          <button
+                            className={`btn rounded-5 px-3 fw-semibold py-1 btn-sm ${
+                              !profile[!profile.email ? "email" : "phoneNumber"]
+                                ? "btn-primary"
+                                : "p-btn"
+                            }`}
+                            style={
+                              !profile[!profile.email ? "email" : "phoneNumber"]
+                                ? {}
+                                : { backgroundColor: "#e9ecef" }
+                            }
+                            onClick={() =>
+                              handleEditToggle(
+                                !profile.email ? "email" : "phoneNumber"
+                              )
+                            }
+                            disabled={loading}
+                          >
+                            <FaEdit className="me-1" />
+                            {!profile[!profile.email ? "email" : "phoneNumber"]
+                              ? "Add"
+                              : "Edit"}
+                          </button>
+                        </div>
+                        {/* Edit mode for secondary contact */}
+                        {editFields[
+                          !profile.email ? "email" : "phoneNumber"
+                        ] && (
+                          <div className="d-flex align-items-center mt-2">
+                            <input
+                              type={!profile.email ? "email" : "tel"}
+                              className="form-control me-2"
+                              value={
+                                profile[
+                                  !profile.email ? "email" : "phoneNumber"
+                                ] || ""
+                              }
+                              onChange={(e) =>
+                                handleInputChange(
+                                  !profile.email ? "email" : "phoneNumber",
+                                  e.target.value
+                                )
+                              }
+                              placeholder={`Enter your ${
+                                !profile.email ? "email" : "phone number"
+                              }`}
+                              disabled={loading}
+                            />
+                            <button
+                              className="btn btn-success btn-sm"
+                              onClick={() =>
+                                handleSave(
+                                  !profile.email ? "email" : "phoneNumber"
+                                )
+                              }
+                              disabled={
+                                loading ||
+                                !profile[
+                                  !profile.email ? "email" : "phoneNumber"
+                                ]?.trim()
+                              }
+                            >
+                              <FaSave />
+                            </button>
+                            <button
+                              className="btn btn-danger btn-sm ms-2"
+                              onClick={() =>
+                                handleCancel(
+                                  !profile.email ? "email" : "phoneNumber"
+                                )
+                              }
+                              disabled={loading}
+                            >
+                              <FaTimes />
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* About Section */}
+                    <div className="mb-4 p-3 border rounded">
+                      <div className="d-flex justify-content-between align-items-center">
+                        <strong className="text-dark fs-5">
+                          About{" "}
+                          <span className="text-primary">
+                            {profile.username || "User"}
+                          </span>
+                        </strong>
+                        {!editFields.about ? (
+                          <button
+                            className="btn rounded-5 p-btn px-4 fw-semibold py-1 btn-sm"
+                            style={{ backgroundColor: "#e9ecef" }}
+                            onClick={() => handleEditToggle("about")}
+                            disabled={loading}
+                          >
+                            <FaEdit className="me-1" />
+                            Edit
+                          </button>
+                        ) : (
+                          <div className="d-flex gap-2">
+                            <button
+                              className="btn btn-success px-4 fw-semibold py-1 btn-sm"
+                              onClick={() => handleSave("about")}
+                              disabled={loading}
+                            >
+                              <FaSave className="me-1" />
+                              Save
+                            </button>
+                            <button
+                              className="btn btn-danger px-4 fw-semibold py-1 btn-sm"
+                              onClick={() => handleCancel("about")}
+                              disabled={loading}
+                            >
+                              <FaTimes className="me-1" />
+                              Cancel
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                      {!editFields.about ? (
+                        <div className="mt-2">
+                          {profile.about ? (
+                            <p className="text-muted">{profile.about}</p>
+                          ) : (
+                            <p className="text-muted fst-italic">
+                              No description added yet.
+                            </p>
+                          )}
+                        </div>
+                      ) : (
+                        <textarea
+                          className="form-control mt-3"
+                          value={profile.about || ""}
+                          onChange={(e) =>
+                            handleInputChange("about", e.target.value)
+                          }
+                          placeholder="Tell us about yourself..."
+                          rows="4"
+                          disabled={loading}
+                        />
+                      )}
+                    </div>
+
+                    {/* Application Forms */}
+                    <div className="mb-4 p-3 border rounded">
+                      <div className="mt-3">
+                        <strong className="text-dark fs-4">
+                          Application Form
+                        </strong>
+                        <div className="d-flex justify-content-between align-items-center mt-2">
+                          <span>Visa application form</span>
+                          <button className="btn btn-success rounded-5 px-4 fw-semibold py-1 btn-sm">
+                            Fill
+                          </button>
+                        </div>
+                        <div className="d-flex justify-content-between align-items-center mt-2">
+                          <span>Personal information form</span>
+                          <button className="btn btn-success rounded-5 px-4 fw-semibold py-1 btn-sm">
+                            Fill
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                </div>
+              </div>
+
+              {/* College Info */}
+              <div className="col-md-6 gap-4 ">
+                <div className="card px-4 py-5 p-container">
+                  <div className="d-flex justify-content-between p-3 border-custom m-3 mx-auto">
+                    <div className="w-75 ">
+                      <h5 className="mb-4 text-dark fw-bold ">
+                        College Details
+                      </h5>
+                      <p>
+                        This are the professional details shown to users in the
+                        app.
+                      </p>
+                    </div>
+                    <img
+                      src={star} // Placeholder image
+                      alt="College"
+                      className="rounded"
+                      style={{ width: "50px", height: "50px" }}
+                    />
+                  </div>
+
+                  <div className="d-flex justify-content-between">
+                    <div className="d-flex flex-column justify-content-center">
+                      <strong>PSG Institutions, Coimbatore</strong>
+                      <span className="text-secondary">Tamil Nadu, India</span>
+                      <p>
+                        Professional details about the college and its programs.
+                      </p>
+                      {/* See More Button */}
+                      {!showMoreStatus && (
+                        <button
+                          className="btn btn-link"
+                          onClick={() => setShowMoreStatus(true)}
+                        >
+                          See More
+                        </button>
+                      )}
+                      {showMoreStatus && <p>Additional college details...</p>}
+                    </div>
+                  </div>
+
+                  {/* Wishlist */}
+                  <div className="col-md-7 mt-4">
+                    <div className="card px-4 py-5 p-container">
+                      <h4 className="mb-4">Wishlist</h4>
+                      <div className="mb-3">
+                        <strong>1. PSG Institutions</strong>
+                        <button className="btn btn-info ms-3">View</button>
+                      </div>
+                      {showMoreWishlist && (
+                        <div className="mb-3">
+                          <strong>2. Other College Name</strong>
+                          <button className="btn btn-info ms-3">View</button>
+                        </div>
+                      )}
+                      <button
+                        className="btn btn-link"
+                        onClick={() => setShowMoreWishlist(!showMoreWishlist)}
+                      >
+                        {showMoreWishlist ? "See Less" : "See More"}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
