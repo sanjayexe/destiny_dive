@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
@@ -6,9 +6,12 @@ import logo from "./images/navlogo.png";
 import back_btn from "./images/back-btn.png";
 import continue_btn from "./images/continue-btn.png";
 import Footer from "./Footer";
+import { UserContext } from "./UserContext";
+import { jsPDF } from "jspdf";
 
 const ScholarShipForm = () => {
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
   // Form state
   const [formData, setFormData] = useState({
@@ -24,10 +27,12 @@ const ScholarShipForm = () => {
     religion: "",
     singleParent: "",
     caste: "",
+    status: "Pending",
   });
 
   // Error state
   const [errors, setErrors] = useState({});
+  const [showSuccess, setShowSuccess] = useState(false);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -65,22 +70,41 @@ const ScholarShipForm = () => {
     return Object.keys(newErrors).length === 0; // Returns true if no errors
   };
 
+  // PDF generation function
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text("Scholarship Form Details", 10, 15);
+    doc.setFontSize(12);
+    let y = 30;
+    Object.entries({
+      ...formData,
+      userName: user?.username || "",
+      userEmail: user?.email || "",
+    }).forEach(([key, value]) => {
+      doc.text(`${key}: ${value}`, 10, y);
+      y += 10;
+    });
+    doc.save("scholarship_form.pdf");
+  };
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(user);
     if (validateForm()) {
       try {
-        const response = await axios.post(
-          "http://localhost:5000/api/scholarship",
-          formData
-        );
-        console.log(response.data);
-        alert("Form submitted successfully!");
-        navigate("/scdetails");
+        const payload = {
+          ...formData,
+          userName: user?.username || "",
+          userEmail: user?.email || "",
+        };
+        console.log(user.username);
+        await axios.post("http://localhost:4503/scholarships", payload);
+        setShowSuccess(true);
       } catch (error) {
-        navigate("/scdetails");
-        console.error("Error submitting the form:", error);
-        alert("Failed to submit the form. Please try again.");
+        setShowSuccess(false);
+        // Optionally, you can set an error state and show an error message in the UI if needed
       }
     }
   };
@@ -102,6 +126,65 @@ const ScholarShipForm = () => {
       </div>
       <div className="container py-5">
         <h2 className="text-center">Scholarship Form</h2>
+        {/* Success Modal */}
+        {showSuccess && (
+          <div
+            className="modal fade show d-block"
+            tabIndex="-1"
+            style={{ background: "rgba(0,0,0,0.5)" }}
+          >
+            <div className="modal-dialog modal-dialog-centered">
+              <div className="modal-content text-center p-4">
+                <div className="mb-3">
+                  {/* Animated SVG Checkmark */}
+                  <svg width="80" height="80" viewBox="0 0 80 80">
+                    <circle
+                      cx="40"
+                      cy="40"
+                      r="38"
+                      stroke="#4BB543"
+                      strokeWidth="4"
+                      fill="none"
+                    />
+                    <polyline
+                      points="22,42 36,56 58,28"
+                      fill="none"
+                      stroke="#4BB543"
+                      strokeWidth="5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <animate
+                        attributeName="points"
+                        dur="0.5s"
+                        to="22,42 36,56 58,28"
+                        fill="freeze"
+                      />
+                    </polyline>
+                  </svg>
+                </div>
+                <h4 className="text-success mb-3">
+                  Form Submitted Successfully!
+                </h4>
+                <button
+                  className="btn btn-primary mb-2"
+                  onClick={handleDownloadPDF}
+                >
+                  Download PDF
+                </button>
+                <button
+                  className="btn btn-outline-secondary"
+                  onClick={() => {
+                    setShowSuccess(false);
+                    navigate("/ProfilePage");
+                  }}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit}>
           <div className="row g-3">
@@ -198,7 +281,7 @@ const ScholarShipForm = () => {
 
             {/* Twelfth Mark */}
             <div className="col-md-6">
-              <label className="form-label">Twelfth Mark</label>
+              <label className="form-label">Twelfth Percentage</label>
               <input
                 type="text"
                 name="twelfthMark"
@@ -215,7 +298,7 @@ const ScholarShipForm = () => {
 
             {/* Tenth Mark */}
             <div className="col-md-6">
-              <label className="form-label">Tenth Mark</label>
+              <label className="form-label">Tenth Percentage</label>
               <input
                 type="text"
                 name="tenthMark"
@@ -297,15 +380,21 @@ const ScholarShipForm = () => {
             {/* Religion */}
             <div className="col-md-6">
               <label className="form-label">Religion</label>
-              <input
-                type="text"
+              <select
                 name="religion"
                 value={formData.religion}
                 onChange={handleChange}
-                className={`form-control ${
-                  errors.religion ? "is-invalid" : ""
-                }`}
-              />
+                className={`form-select ${errors.religion ? "is-invalid" : ""}`}
+              >
+                <option value="">Select</option>
+                <option value="Hindu">Hindu</option>
+                <option value="Muslim">Muslim</option>
+                <option value="Christian">Christian</option>
+                <option value="Sikh">Sikh</option>
+                <option value="Buddhist">Buddhist</option>
+                <option value="Jain">Jain</option>
+                <option value="Other">Other</option>
+              </select>
               {errors.religion && (
                 <div className="invalid-feedback">{errors.religion}</div>
               )}
@@ -357,6 +446,7 @@ const ScholarShipForm = () => {
                 <option value="OBC">OBC</option>
                 <option value="SC">SC</option>
                 <option value="ST">ST</option>
+                <option value="Others">Others</option>
               </select>
               {errors.caste && (
                 <div className="invalid-feedback">{errors.caste}</div>
@@ -366,7 +456,7 @@ const ScholarShipForm = () => {
 
           <div className="d-flex justify-content-center mt-4">
             <button type="submit" className="continue-btn rounded-5">
-              Visit
+              Submit
               <img
                 src={continue_btn}
                 className="ms-1"

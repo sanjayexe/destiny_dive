@@ -9,6 +9,7 @@ import bg from "./images/bg-color.jpeg";
 import google from "./images/google.png";
 import facebook from "./images/facebook.png";
 import x from "./images/x.png";
+import { GoogleLogin } from "@react-oauth/google";
 
 const LoginPage = () => {
   const { setUser } = useContext(UserContext);
@@ -16,6 +17,7 @@ const LoginPage = () => {
     emailOrMobile: "",
     email: "",
     mobile: Number,
+    showPassword: false,
   });
   const [error, setError] = useState("");
   const [emailOrMobileError, setEmailOrMobileError] = useState("");
@@ -87,13 +89,16 @@ const LoginPage = () => {
 
       if (response.data && response.data.user) {
         const users = response.data.user;
+        console.log(users);
         if (users.emailOrMobile === "admin") {
           setIsAdmin(true);
           setUser(users);
+          localStorage.setItem("user", JSON.stringify(users)); // <-- ensure profileImage is included if present
           navigate("/adminDashboard");
+          return;
         }
         setUser(users);
-        localStorage.setItem("user", JSON.stringify(users));
+        localStorage.setItem("user", JSON.stringify(users)); // <-- ensure profileImage is included if present
         navigate("/Landing");
       } else {
         setError("Invalid email/mobile or password.");
@@ -106,199 +111,143 @@ const LoginPage = () => {
 
   return (
     <div
-      className="d-flex justify-content-center align-items-center vh-100"
-      style={{
-        backgroundImage: `url(${bg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        fontFamily: "'Roboto', sans-serif",
-      }}
+      className="d-flex justify-content-center align-items-center min-vh-100 bg-light"
+      style={{ fontFamily: "Inter, sans-serif" }}
     >
       <div
-        className="position-absolute top-0 start-0"
-        style={{
-          zIndex: 9999,
-          paddingTop: "20px",
-          paddingLeft: "20px",
-        }}
+        className="card shadow-lg p-4 border-0 rounded-4"
+        style={{ maxWidth: 400, width: "100%", background: "#fff" }}
       >
-        <img
-          src={logo}
-          alt="Logo"
-          style={{
-            width: "8rem",
-            height: "auto",
-            maxWidth: "100%",
-          }}
-        />
-      </div>
-
-      <div
-        className=" mx-4 shadow-lg form-bg"
-        style={{
-          maxWidth: "500px",
-          width: "100%",
-          boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-          position: "relative",
-        }}
-      >
-        <div className="text-center mt-5 mb-4" style={{}}>
-          <h2
-            className="fw-bolder"
-            style={{
-              color: "black",
-              fontSize: "1.8rem",
-              marginBottom: "10px",
-            }}
-          >
-            Login to Your Account
-          </h2>
+        <div className="text-center mb-4">
+          <img
+            src={logo}
+            alt="Logo"
+            style={{ width: 64, height: 64, borderRadius: 16 }}
+          />
+          <h2 className="fw-bold mt-3 mb-2 text-primary">Sign In</h2>
+          <p className="text-muted">
+            Welcome back! Please login to your account.
+          </p>
         </div>
-        <form
-          onSubmit={handleSubmit}
-          style={{ width: "60%" }}
-          className="mx-auto"
-        >
-          <div className="mb-3">
-            <label htmlFor="emailOrMobile" className="form-label fw-bold">
-              Email or Mobile
-            </label>
+        <form onSubmit={handleSubmit}>
+          <div className="form-floating mb-3">
             <input
               type="text"
               id="emailOrMobile"
               name="emailOrMobile"
-              className="form-control"
+              className={`form-control rounded-3 ${
+                emailOrMobileError ? "is-invalid" : ""
+              }`}
               value={formData.emailOrMobile}
               onChange={handleChange}
-              placeholder="Enter your email or mobile number"
-              style={{
-                borderRadius: "8px",
-                border: "none",
-                padding: "10px",
-                backgroundColor: "#f5f5f5",
-              }}
+              placeholder="Email or Mobile"
+              style={{ background: "#f8fafc" }}
             />
+            <label htmlFor="emailOrMobile">Email or Mobile</label>
             {emailOrMobileError && (
-              <div className="text-danger">{emailOrMobileError}</div>
+              <div className="invalid-feedback">{emailOrMobileError}</div>
             )}
           </div>
-
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label fw-bold">
-              Password
-            </label>
+          <div className="form-floating mb-3 position-relative">
             <input
-              type="password"
+              type={formData.showPassword ? "text" : "password"}
               id="password"
               name="password"
-              className="form-control"
+              className={`form-control rounded-3 ${
+                passwordError ? "is-invalid" : ""
+              }`}
               value={formData.password}
               onChange={handleChange}
-              placeholder="Enter your password"
-              style={{
-                borderRadius: "8px",
-                border: "none",
-                padding: "10px",
-                backgroundColor: "#f5f5f5",
-              }}
+              placeholder="Password"
+              style={{ background: "#f8fafc" }}
             />
+            <label htmlFor="password">Password</label>
+            <span
+              className="position-absolute top-50 end-0 translate-middle-y pe-3"
+              style={{ cursor: "pointer", color: "#2563eb" }}
+              onClick={() =>
+                setFormData({
+                  ...formData,
+                  showPassword: !formData.showPassword,
+                })
+              }
+            >
+              {formData.showPassword ? "🙈" : "👁️"}
+            </span>
             {passwordError && (
-              <div className="text-danger">{passwordError}</div>
+              <div className="invalid-feedback">{passwordError}</div>
             )}
           </div>
-
-          {error && <div className="text-danger mb-3">{error}</div>}
-
+          {error && (
+            <div className="alert alert-danger py-2 mb-3 rounded-3">
+              {error}
+            </div>
+          )}
           <button
             type="submit"
-            className="btn button w-100 justify-content-center"
-            style={{
-              borderRadius: "8px",
-              background: " #5885B8",
-              color: "white",
-              border: "none",
-              padding: "10px",
-              fontSize: "1rem",
-              transition: "all 0.3s",
-            }}
-            onMouseOver={(e) => (e.target.style.backgroundColor = "#4c8ef9")}
-            onMouseOut={(e) => (e.target.style.backgroundColor = "#66a6ff")}
+            className="btn btn-primary w-100 rounded-3 fw-bold mb-3"
+            style={{ background: "#2563eb", fontWeight: 600 }}
           >
             Login
           </button>
         </form>
-        <hr className="hr mx-auto border-3" />
-        <div className="text-center mt-4">
-          <p>Or sign up with</p>
-          <div className="d-flex justify-content-center gap-3">
-            <button
-              className="btn btn-outline-secondary"
-              style={{
-                borderRadius: "50%",
-                padding: "10px",
-                transition: "transform 0.3s",
-              }}
-            >
-              <img
-                src={google}
-                alt="google"
-                style={{
-                  width: "24px",
-                  height: "24px",
-                }}
-              />
-            </button>
-            <button
-              className="btn btn-outline-secondary"
-              style={{
-                borderRadius: "50%",
-                padding: "10px",
-                transition: "transform 0.3s",
-              }}
-            >
-              <img
-                src={facebook}
-                alt="facebook"
-                style={{
-                  width: "24px",
-                  height: "24px",
-                }}
-              />
-            </button>
-            <button
-              className="btn btn-outline-secondary"
-              style={{
-                borderRadius: "50%",
-                padding: "10px",
-                transition: "transform 0.3s",
-              }}
-            >
-              <img
-                src={x}
-                alt="x"
-                style={{
-                  width: "24px",
-                  height: "24px",
-                }}
-              />
-            </button>
-          </div>
+        <div className="text-center mb-3 text-muted">or sign in with</div>
+        <div className="d-flex justify-content-center gap-3 mb-3">
+          <GoogleLogin
+            onSuccess={async (credentialResponse) => {
+              try {
+                const response = await axios.post(
+                  "http://localhost:4503/api/google-login",
+                  {
+                    credential: credentialResponse.credential,
+                  }
+                );
+                if (response.data && response.data.user) {
+                  const normalizedUser = {
+                    ...response.data.user,
+                    profileImage:
+                      response.data.user.profileImage ||
+                      response.data.user.picture ||
+                      "",
+                  };
+                  setUser(normalizedUser);
+                  localStorage.setItem("user", JSON.stringify(normalizedUser));
+                  navigate("/Landing");
+                } else {
+                  setError("Google login failed.");
+                }
+              } catch (err) {
+                setError("Google login failed.");
+              }
+            }}
+            onError={() => setError("Google login failed.")}
+            width="100%"
+          />
+          <button
+            className="btn btn-outline-secondary rounded-circle p-2 border-0 shadow-sm"
+            style={{ width: 44, height: 44 }}
+          >
+            <img
+              src={facebook}
+              alt="facebook"
+              style={{ width: 24, height: 24 }}
+            />
+          </button>
+          <button
+            className="btn btn-outline-secondary rounded-circle p-2 border-0 shadow-sm"
+            style={{ width: 44, height: 44 }}
+          >
+            <img src={x} alt="x" style={{ width: 24, height: 24 }} />
+          </button>
         </div>
-        <div className="text-center mt-3">
-          <p>
-            Don't have an account?{" "}
-            <a
-              href="/signup"
-              style={{
-                textDecoration: "none",
-                color: "#66a6ff",
-                fontWeight: "bold",
-              }}
-            >
-              Sign Up here
-            </a>
-          </p>
+        <div className="text-center mt-2">
+          <span className="text-muted">Don't have an account? </span>
+          <a
+            href="/signup"
+            className="fw-bold text-primary text-decoration-none"
+          >
+            Sign Up
+          </a>
         </div>
       </div>
     </div>

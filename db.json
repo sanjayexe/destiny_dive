@@ -1,98 +1,4 @@
 {
-  "users": [
-    {
-      "id": "a3ad",
-      "email": "sanjayt.22msc@kongu.edu",
-      "password": "123456"
-    },
-    {
-      "id": "f116",
-      "email": "sanjay.jay18v@gmail.com",
-      "password": "123456"
-    },
-    {
-      "id": "afd6",
-      "email": "sanjayt.22msc@kongu.edu",
-      "password": "123456"
-    },
-    {
-      "id": "49e0",
-      "email": "sanjayt.22msc@kongu.edu",
-      "password": "123456"
-    },
-    {
-      "id": "cc30",
-      "username": "sanjay_thirumoorthy",
-      "email": "sanjay.jay18v@gmail.com",
-      "password": "123456"
-    },
-    {
-      "id": "868a",
-      "username": "sanjay",
-      "emailOrMobile": "9345748085",
-      "password": "123456"
-    },
-    {
-      "id": "1219",
-      "emailOrMobile": "9345748085"
-    },
-    {
-      "id": "f5cf",
-      "username": "sanjay",
-      "emailOrMobile": "9345748085",
-      "password": "Sanjay@18",
-      "otp": 607122
-    },
-    {
-      "id": "4261",
-      "username": "sanjay",
-      "emailOrMobile": "sanjay@gmail.com",
-      "password": "Sanjay@18",
-      "otp": "702593"
-    },
-    {
-      "id": "4269",
-      "username": "sanjay",
-      "emailOrMobile": "sanjay@gmail.com",
-      "password": "Sanjay@18",
-      "otp": "262713"
-    },
-    {
-      "id": "2344",
-      "username": "sanjayt",
-      "emailOrMobile": "sanjayy@gmail.com",
-      "password": "Sanjay@18",
-      "otp": "262713"
-    },
-    {
-      "id": "2344",
-      "username": "sanjayt",
-      "emailOrMobile": "admin@gmail.com",
-      "password": "Sanjay@18"
-    },
-    {
-      "id": "a494",
-      "username": "sanjay",
-      "emailOrMobile": "9345748085",
-      "password": "Sanjay@18",
-      "otp": "640998"
-    },
-    {
-      "id": "2f27",
-      "username": "sanjay",
-      "emailOrMobile": "9345748085",
-      "password": "Sanjay@188"
-    }
-  ],
-  "usersProfile": [
-    {
-      "id": "1",
-      "username": "sanjay",
-      "emailOrMobile": "john.doe@example.com",
-      "about": "Software Developer",
-      "profileImage": "https://via.placeholder.com/80"
-    }
-  ],
   "colleges": [
     {
       "id": "1",
@@ -101,8 +7,7 @@
       "type": "Indian",
       "chances": 100,
       "minPercentage": 90,
-      "degree": ["Engineering", "Science", "mba"],
-      "recommendedCourses": ["Computer Science", "Mechanical Engineering"],
+      "degree": ["Engineering", "Science", "MBA", "PhD", "BTech", "MTech"],
       "universityType": "Autonomous",
       "tuitionFee": 20000,
       "courseDuration": "48 months"
@@ -114,12 +19,7 @@
       "type": "Indian",
       "chances": 50,
       "minPercentage": 85,
-      "degree": ["Engineering", "Technology", "mba"],
-      "recommendedCourses": [
-        "Civil Engineering",
-        "Electrical Engineering",
-        "MBA"
-      ],
+      "degree": ["Engineering", "Technology", "MBA", "PhD", "BTech", "MTech"],
       "universityType": "Autonomous",
       "tuitionFee": 18000,
       "courseDuration": "48 months"
@@ -127,12 +27,11 @@
     {
       "id": "3",
       "name": "IIM Ahmedabad",
-      "location": "Ahmedabad,India",
+      "location": "Ahmedabad, India",
       "type": "Indian",
       "chances": 0,
       "minPercentage": 75,
-      "degree": ["Management", "Bachelors"],
-      "recommendedCourses": ["MBA", "PGDM"],
+      "degree": ["Management", "Bachelors", "MBA", "PhD"],
       "universityType": "Autonomous",
       "tuitionFee": 25000,
       "courseDuration": "24 months"
@@ -144,60 +43,15 @@
       "type": "Abroad",
       "chances": 0,
       "minPercentage": 95,
-      "degree": ["Engineering", "Business", "mba"],
-      "recommendedCourses": ["MBA", "Data Science", "Law"],
-      "universityType": "Private",
-      "tuitionFee": 50000,
-      "courseDuration": "24 months"
-    },
-    {
-      "id": "4",
-      "name": "Stanford University",
-      "location": "California, USA",
-      "type": "Abroad",
-      "chances": 0,
-      "minPercentage": 95,
-      "degree": ["Engineering", "Business"],
-      "recommendedCourses": ["MBA", "Data Science"],
-      "universityType": "Private",
-      "tuitionFee": 50000,
-      "courseDuration": "24 months"
-    },
-    {
-      "id": "4",
-      "name": "Stanford University",
-      "location": "California, USA",
-      "type": "Abroad",
-      "chances": 0,
-      "minPercentage": 95,
-      "degree": ["Engineering", "Business", "Bachelors", "MBA", "Law"],
-      "recommendedCourses": ["MBA", "Data Science"],
-      "universityType": "Private",
-      "tuitionFee": 50000,
-      "courseDuration": "24 months"
-    },
-    {
-      "id": "4",
-      "name": "Stanford University",
-      "location": "California, USA",
-      "type": "Abroad",
-      "chances": 0,
-      "minPercentage": 95,
-      "degree": ["Engineering", "Business"],
-      "recommendedCourses": ["MBA", "Data Science"],
-      "universityType": "Private",
-      "tuitionFee": 50000,
-      "courseDuration": "24 months"
-    },
-    {
-      "id": "4",
-      "name": "Stanford University",
-      "location": "California, USA",
-      "type": "Abroad",
-      "chances": 0,
-      "minPercentage": 95,
-      "degree": ["Engineering", "Business"],
-      "recommendedCourses": ["MBA", "Data Science"],
+      "degree": [
+        "Engineering",
+        "Business",
+        "MBA",
+        "Law",
+        "PhD",
+        "Bachelors",
+        "Masters"
+      ],
       "universityType": "Private",
       "tuitionFee": 50000,
       "courseDuration": "24 months"
@@ -209,8 +63,7 @@
       "type": "Abroad",
       "chances": 50,
       "minPercentage": 93,
-      "degree": ["Law", "Science"],
-      "recommendedCourses": ["Law", "Physics"],
+      "degree": ["Law", "Science", "MBA", "PhD", "Bachelors", "Masters"],
       "universityType": "Private",
       "tuitionFee": 45000,
       "courseDuration": "36 months"
@@ -222,47 +75,562 @@
       "type": "Abroad",
       "chances": 100,
       "minPercentage": 92,
-      "degree": ["Science", "Technology"],
-      "recommendedCourses": ["Physics", "Mathematics"],
+      "degree": ["Science", "Technology", "MBA", "PhD", "Bachelors", "Masters"],
       "universityType": "Public",
       "tuitionFee": 35000,
+      "courseDuration": "36 months"
+    },
+    {
+      "id": "7",
+      "name": "MIT",
+      "location": "Massachusetts, USA",
+      "type": "Abroad",
+      "chances": 0,
+      "minPercentage": 96,
+      "degree": [
+        "Engineering",
+        "Science",
+        "Technology",
+        "MBA",
+        "PhD",
+        "Bachelors",
+        "Masters"
+      ],
+      "universityType": "Private",
+      "tuitionFee": 55000,
+      "courseDuration": "48 months"
+    },
+    {
+      "id": "8",
+      "name": "Oxford University",
+      "location": "Oxford, UK",
+      "type": "Abroad",
+      "chances": 50,
+      "minPercentage": 94,
+      "degree": [
+        "Science",
+        "Arts",
+        "Law",
+        "MBA",
+        "PhD",
+        "Bachelors",
+        "Masters"
+      ],
+      "universityType": "Public",
+      "tuitionFee": 40000,
+      "courseDuration": "36 months"
+    },
+    {
+      "id": "9",
+      "name": "IIT Madras",
+      "location": "Chennai, India",
+      "type": "Indian",
+      "chances": 100,
+      "minPercentage": 88,
+      "degree": ["Engineering", "Science", "MBA", "PhD", "BTech", "MTech"],
+      "universityType": "Autonomous",
+      "tuitionFee": 22000,
+      "courseDuration": "48 months"
+    },
+    {
+      "id": "10",
+      "name": "IIM Bangalore",
+      "location": "Bangalore, India",
+      "type": "Indian",
+      "chances": 50,
+      "minPercentage": 80,
+      "degree": ["Management", "MBA", "PhD", "Bachelors"],
+      "universityType": "Autonomous",
+      "tuitionFee": 23000,
+      "courseDuration": "24 months"
+    },
+    {
+      "id": "11",
+      "name": "University of Toronto",
+      "location": "Toronto, Canada",
+      "type": "Abroad",
+      "chances": 100,
+      "minPercentage": 85,
+      "degree": ["Engineering", "Science", "Arts", "Bachelors", "Masters"],
+      "universityType": "Public",
+      "tuitionFee": 30000,
+      "courseDuration": "48 months"
+    },
+    {
+      "id": "12",
+      "name": "University of Melbourne",
+      "location": "Melbourne, Australia",
+      "type": "Abroad",
+      "chances": 100,
+      "minPercentage": 82,
+      "degree": ["Science", "Arts", "Engineering", "Bachelors", "Masters"],
+      "universityType": "Public",
+      "tuitionFee": 28000,
+      "courseDuration": "36 months"
+    },
+    {
+      "id": "13",
+      "name": "IIT Kanpur",
+      "location": "Kanpur, India",
+      "type": "Indian",
+      "chances": 100,
+      "minPercentage": 87,
+      "degree": ["Engineering", "Science", "MBA", "PhD", "BTech", "MTech"],
+      "universityType": "Autonomous",
+      "tuitionFee": 21000,
+      "courseDuration": "48 months"
+    },
+    {
+      "id": "14",
+      "name": "IIM Calcutta",
+      "location": "Kolkata, India",
+      "type": "Indian",
+      "chances": 50,
+      "minPercentage": 78,
+      "degree": ["Management", "MBA", "PhD", "Bachelors"],
+      "universityType": "Autonomous",
+      "tuitionFee": 24000,
+      "courseDuration": "24 months"
+    },
+    {
+      "id": "15",
+      "name": "University of British Columbia",
+      "location": "Vancouver, Canada",
+      "type": "Abroad",
+      "chances": 100,
+      "minPercentage": 83,
+      "degree": ["Science", "Arts", "Engineering", "Bachelors", "Masters"],
+      "universityType": "Public",
+      "tuitionFee": 32000,
+      "courseDuration": "48 months"
+    },
+    {
+      "id": "16",
+      "name": "University of Sydney",
+      "location": "Sydney, Australia",
+      "type": "Abroad",
+      "chances": 100,
+      "minPercentage": 80,
+      "degree": ["Science", "Arts", "Medicine", "Bachelors", "Masters"],
+      "universityType": "Public",
+      "tuitionFee": 26000,
+      "courseDuration": "36 months"
+    },
+    {
+      "id": "17",
+      "name": "IIT Kharagpur",
+      "location": "Kharagpur, India",
+      "type": "Indian",
+      "chances": 100,
+      "minPercentage": 86,
+      "degree": [
+        "Engineering",
+        "Science",
+        "Technology",
+        "MBA",
+        "PhD",
+        "BTech",
+        "MTech"
+      ],
+      "universityType": "Autonomous",
+      "tuitionFee": 19000,
+      "courseDuration": "48 months"
+    },
+    {
+      "id": "18",
+      "name": "IIM Lucknow",
+      "location": "Lucknow, India",
+      "type": "Indian",
+      "chances": 50,
+      "minPercentage": 77,
+      "degree": ["Management", "MBA", "PhD", "Bachelors"],
+      "universityType": "Autonomous",
+      "tuitionFee": 22000,
+      "courseDuration": "24 months"
+    },
+    {
+      "id": "19",
+      "name": "McGill University",
+      "location": "Montreal, Canada",
+      "type": "Abroad",
+      "chances": 100,
+      "minPercentage": 84,
+      "degree": ["Science", "Arts", "Medicine", "Bachelors", "Masters"],
+      "universityType": "Public",
+      "tuitionFee": 29000,
+      "courseDuration": "48 months"
+    },
+    {
+      "id": "20",
+      "name": "Monash University",
+      "location": "Melbourne, Australia",
+      "type": "Abroad",
+      "chances": 100,
+      "minPercentage": 79,
+      "degree": ["Science", "Arts", "Engineering", "Bachelors", "Masters"],
+      "universityType": "Public",
+      "tuitionFee": 25000,
+      "courseDuration": "36 months"
+    },
+    {
+      "id": "21",
+      "name": "IIT Roorkee",
+      "location": "Roorkee, India",
+      "type": "Indian",
+      "chances": 100,
+      "minPercentage": 85,
+      "degree": ["Engineering", "Science", "MBA", "PhD", "BTech", "MTech"],
+      "universityType": "Autonomous",
+      "tuitionFee": 20000,
+      "courseDuration": "48 months"
+    },
+    {
+      "id": "22",
+      "name": "IIM Kozhikode",
+      "location": "Kozhikode, India",
+      "type": "Indian",
+      "chances": 50,
+      "minPercentage": 76,
+      "degree": ["Management", "MBA", "PhD", "Bachelors"],
+      "universityType": "Autonomous",
+      "tuitionFee": 21000,
+      "courseDuration": "24 months"
+    },
+    {
+      "id": "23",
+      "name": "University of Alberta",
+      "location": "Edmonton, Canada",
+      "type": "Abroad",
+      "chances": 100,
+      "minPercentage": 81,
+      "degree": ["Science", "Arts", "Engineering", "Bachelors", "Masters"],
+      "universityType": "Public",
+      "tuitionFee": 27000,
+      "courseDuration": "48 months"
+    },
+    {
+      "id": "24",
+      "name": "University of Queensland",
+      "location": "Brisbane, Australia",
+      "type": "Abroad",
+      "chances": 100,
+      "minPercentage": 78,
+      "degree": ["Science", "Arts", "Medicine", "Bachelors", "Masters"],
+      "universityType": "Public",
+      "tuitionFee": 24000,
       "courseDuration": "36 months"
     }
   ],
   "collegeInfo": [
     {
       "id": "1",
-      "name": "Stanford University",
+      "name": "IIT Bombay",
       "image": "https://via.placeholder.com/800x400",
-      "about": "UMass is known for its academic programs, research, and public service...",
+      "about": "IIT Bombay is one of India's premier engineering institutions, known for its academic excellence and research.",
       "courses": [
         {
-          "category": "Engineering & Technology",
-          "popularCourses": "Mechanical, Civil, Computer Science, Electrical",
-          "fees": "₹4,88,000–₹12,20,000"
-        },
-        {
-          "category": "Health Sciences",
-          "popularCourses": "Medicine, Nursing, Pharmacy",
-          "fees": "₹8,54,000–₹24,40,000"
+          "category": "Engineering & Science",
+          "popularCourses": "Computer Science, Mechanical Engineering",
+          "fees": "₹20,000 per year"
         }
       ]
     },
     {
       "id": "2",
-      "name": "IIM Ahmedabad",
+      "name": "IIT Delhi",
       "image": "https://via.placeholder.com/800x400",
-      "about": "UMass is known for its academic programs, research, and public service. It has a mission to provide affordable, world-class education, conduct groundbreaking research, and create social and economic impact",
+      "about": "IIT Delhi is a top-ranked engineering institute in India, offering a variety of technical and management programs.",
       "courses": [
         {
-          "category": "Business",
-          "popularCourses": "MBA, Marketing, Finance",
-          "fees": "₹20,00,000–₹50,00,000"
-        },
+          "category": "Engineering & Technology",
+          "popularCourses": "Civil Engineering, Electrical Engineering, MBA",
+          "fees": "₹18,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "IIM Ahmedabad",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "IIM Ahmedabad is India's leading business school, renowned for its MBA and management programs.",
+      "courses": [
         {
-          "category": "Law",
-          "popularCourses": "Corporate Law, International Law",
-          "fees": "₹15,00,000–₹30,00,000"
+          "category": "Management",
+          "popularCourses": "MBA, PGDM",
+          "fees": "₹25,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Stanford University",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "Stanford University is a world-renowned institution in California, USA, known for innovation and research.",
+      "courses": [
+        {
+          "category": "Engineering & Business",
+          "popularCourses": "MBA, Data Science, Law",
+          "fees": "$50,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Harvard University",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "Harvard University is a prestigious Ivy League university in the USA, famous for law and science programs.",
+      "courses": [
+        {
+          "category": "Law & Science",
+          "popularCourses": "Law, Physics",
+          "fees": "$45,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "name": "Cambridge University",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "Cambridge University in the UK is known for its excellence in science and technology education.",
+      "courses": [
+        {
+          "category": "Science & Technology",
+          "popularCourses": "Physics, Mathematics",
+          "fees": "£35,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "name": "MIT",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "MIT is a leading institution in the USA for engineering, science, and technology.",
+      "courses": [
+        {
+          "category": "Engineering & Science",
+          "popularCourses": "Computer Science, Mechanical Engineering, Physics",
+          "fees": "$55,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "name": "Oxford University",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "Oxford University is a historic and prestigious university in the UK, offering a wide range of programs.",
+      "courses": [
+        {
+          "category": "Science, Arts & Law",
+          "popularCourses": "Law, Philosophy, Medicine",
+          "fees": "£40,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "name": "IIT Madras",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "IIT Madras is a top engineering institute in Chennai, India, known for its research and innovation.",
+      "courses": [
+        {
+          "category": "Engineering & Science",
+          "popularCourses": "Computer Science, Chemical Engineering",
+          "fees": "₹22,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "name": "IIM Bangalore",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "IIM Bangalore is a leading management institute in India, offering top MBA programs.",
+      "courses": [
+        {
+          "category": "Management",
+          "popularCourses": "MBA, Finance, Marketing",
+          "fees": "₹23,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "name": "University of Toronto",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "University of Toronto is a top Canadian university, known for its diverse academic offerings.",
+      "courses": [
+        {
+          "category": "Engineering, Science & Arts",
+          "popularCourses": "Computer Science, Medicine, Business",
+          "fees": "CA$30,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "name": "University of Melbourne",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "University of Melbourne is a leading Australian university, offering a range of programs.",
+      "courses": [
+        {
+          "category": "Science, Arts & Engineering",
+          "popularCourses": "Medicine, Law, Engineering",
+          "fees": "AU$28,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "name": "IIT Kanpur",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "IIT Kanpur is a premier engineering institute in India, known for its academic rigor.",
+      "courses": [
+        {
+          "category": "Engineering & Science",
+          "popularCourses": "Aerospace Engineering, Computer Science",
+          "fees": "₹21,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "name": "IIM Calcutta",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "IIM Calcutta is a top business school in India, offering world-class management education.",
+      "courses": [
+        {
+          "category": "Management",
+          "popularCourses": "MBA, Finance, Operations",
+          "fees": "₹24,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "name": "University of British Columbia",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "UBC is a leading Canadian university, known for its research and academic excellence.",
+      "courses": [
+        {
+          "category": "Science, Arts & Engineering",
+          "popularCourses": "Computer Science, Psychology, Business",
+          "fees": "CA$32,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "16",
+      "name": "University of Sydney",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "University of Sydney is a top Australian university, offering a variety of programs.",
+      "courses": [
+        {
+          "category": "Science, Arts & Medicine",
+          "popularCourses": "Medicine, Law, Engineering",
+          "fees": "AU$26,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "17",
+      "name": "IIT Kharagpur",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "IIT Kharagpur is a renowned engineering institute in India, known for its technology programs.",
+      "courses": [
+        {
+          "category": "Engineering, Science & Technology",
+          "popularCourses": "Computer Science, Mechanical Engineering",
+          "fees": "₹19,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "18",
+      "name": "IIM Lucknow",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "IIM Lucknow is a leading management institute in India, offering top MBA programs.",
+      "courses": [
+        {
+          "category": "Management",
+          "popularCourses": "MBA, Human Resources, Marketing",
+          "fees": "₹22,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "19",
+      "name": "McGill University",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "McGill University is a top Canadian university, known for its medical and engineering programs.",
+      "courses": [
+        {
+          "category": "Science, Arts & Medicine",
+          "popularCourses": "Medicine, Law, Engineering",
+          "fees": "CA$29,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "20",
+      "name": "Monash University",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "Monash University is a leading Australian university, offering a wide range of programs.",
+      "courses": [
+        {
+          "category": "Science, Arts & Engineering",
+          "popularCourses": "Medicine, Business, Engineering",
+          "fees": "AU$25,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "21",
+      "name": "IIT Roorkee",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "IIT Roorkee is a top engineering institute in India, known for its academic excellence.",
+      "courses": [
+        {
+          "category": "Engineering & Science",
+          "popularCourses": "Civil Engineering, Computer Science",
+          "fees": "₹20,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "22",
+      "name": "IIM Kozhikode",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "IIM Kozhikode is a leading management institute in India, offering top MBA programs.",
+      "courses": [
+        {
+          "category": "Management",
+          "popularCourses": "MBA, Finance, Marketing",
+          "fees": "₹21,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "23",
+      "name": "University of Alberta",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "University of Alberta is a top Canadian university, known for its research and teaching.",
+      "courses": [
+        {
+          "category": "Science, Arts & Engineering",
+          "popularCourses": "Computer Science, Medicine, Business",
+          "fees": "CA$27,000 per year"
+        }
+      ]
+    },
+    {
+      "id": "24",
+      "name": "University of Queensland",
+      "image": "https://via.placeholder.com/800x400",
+      "about": "University of Queensland is a leading Australian university, offering a variety of programs.",
+      "courses": [
+        {
+          "category": "Science, Arts & Medicine",
+          "popularCourses": "Medicine, Law, Engineering",
+          "fees": "AU$24,000 per year"
         }
       ]
     }

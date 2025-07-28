@@ -21,28 +21,31 @@ import AccommodationApp from "./AccommodationApp";
 import Scholarship from "./Scholarship";
 import ScholarShipForm from "./ScholarShipForm";
 import ScholarshipDetails from "./ScholarshipDetails";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 const App = () => {
   return (
     <BrowserRouter>
-      <UserProvider>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/landing" element={<Landing />} />
-          <Route path="/university" element={<Universities />} />
-          <Route path="/colleges" element={<CollegeList />} />
-          <Route path="/collegeInfo" element={<CollegeDetails />} />
-          <Route path="/appform" element={<CollegeApplicationForm />} />
-          <Route path="/ProfilePage" element={<ProfilePage />} />
-          <Route path="/adminDashboard" element={<AdminDashboard />} />
-          <Route path="/accommodation" element={<AccommodationApp />} />
-          <Route path="/scholarship" element={<Scholarship />} />
-          <Route path="/scForm" element={<ScholarShipForm />} />
-          <Route path="/scdetails" element={<ScholarshipDetails />} />
-        </Routes>
-      </UserProvider>
-      <Outlet />
+      <GoogleOAuthProvider clientId="704307002600-id0deoh3o9o6p42sip3s487rffk9sm7a.apps.googleusercontent.com">
+        <UserProvider>
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/landing" element={<Landing />} />
+            <Route path="/university" element={<Universities />} />
+            <Route path="/colleges" element={<CollegeList />} />
+            <Route path="/collegeInfo" element={<CollegeDetails />} />
+            <Route path="/appform" element={<CollegeApplicationForm />} />
+            <Route path="/ProfilePage" element={<ProfilePage />} />
+            <Route path="/adminDashboard" element={<AdminDashboard />} />
+            <Route path="/accommodation" element={<AccommodationApp />} />
+            <Route path="/scholarship" element={<Scholarship />} />
+            <Route path="/scForm" element={<ScholarShipForm />} />
+            <Route path="/scdetails" element={<ScholarshipDetails />} />
+          </Routes>
+        </UserProvider>
+        <Outlet />
+      </GoogleOAuthProvider>
     </BrowserRouter>
   );
 };

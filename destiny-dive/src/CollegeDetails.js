@@ -13,12 +13,14 @@ const CollegeDetails = () => {
   const collegeName = location.state?.college;
   const collegeType = location.state?.type;
   useEffect(() => {
+    console.log(collegeName);
     if (collegeName) {
       axios
-        .get(`http://localhost:4501/collegeInfo?name=${collegeName}`)
+        .get(`http://localhost:4503/collegeinfos?name=${collegeName}`)
         .then((response) => {
           if (response.data.length > 0) {
             setCollege(response.data[0]);
+            console.log(response.data[0]);
           }
         })
         .catch((error) =>

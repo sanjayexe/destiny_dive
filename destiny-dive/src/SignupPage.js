@@ -8,6 +8,7 @@ import bg from "./images/bg-color.jpeg";
 import google from "./images/google.png";
 import facebook from "./images/facebook.png";
 import x from "./images/x.png";
+import { GoogleLogin } from "@react-oauth/google";
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -17,8 +18,7 @@ const SignupPage = () => {
     confirmPassword: "",
     otp: null,
   });
-  var generatedOTP;
-  const [otpSent, setOtpSent] = useState(false);
+
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
@@ -27,38 +27,9 @@ const SignupPage = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const sendOtp = async () => {
-    generatedOTP = Math.floor(100000 + Math.random() * 900000);
-    alert(generatedOTP);
-    if (!formData.emailOrMobile) {
-      setErrors({
-        ...errors,
-        emailOrMobile: "Please provide your email or mobile number.",
-      });
-      return;
-    }
-
-    // try {
-    //   const response = await axios.post("http://localhost:4500/users", {
-    //     otp: generatedOTP,
-    //   });
-
-    //   if (response.data.success) {
-    //     setOtpSent(true);
-    //     alert("OTP has been sent successfully.");
-    //   } else {
-    //     alert(response.data.message || "Failed to send OTP.");
-    //   }
-    // } catch (error) {
-    //   console.error("Error sending OTP:", error);
-    //   alert("An error occurred while sending OTP. Please try again.");
-    // }
-  };
-
   const validateForm = () => {
     const newErrors = {};
-    const { username, emailOrMobile, password, confirmPassword, otp } =
-      formData;
+    const { username, emailOrMobile, password, confirmPassword } = formData;
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
     if (!username) {
@@ -98,18 +69,28 @@ const SignupPage = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        await axios.post("http://localhost:4503/api/users", {
+        const response = await axios.post("http://localhost:4503/api/users", {
           username: formData.username,
           emailOrMobile: formData.emailOrMobile,
           password: formData.password,
           //otp: formData.otp,
         });
 
-        // alert("Signup successful! Redirecting to login...");
+        // Show success message with input type
+        const inputType = response.data.userType;
+        const inputTypeText =
+          inputType === "email" ? "email address" : "mobile number";
+        alert(
+          `Signup successful with ${inputTypeText}! Redirecting to login...`
+        );
         navigate("/login"); // Redirect to login page
       } catch (error) {
         console.error("Error signing up:", error);
-        alert("Email/mobile number already exsist ! try new credentials");
+        if (error.response?.data?.message) {
+          alert(error.response.data.message);
+        } else {
+          alert("Email/mobile number already exists! Try new credentials");
+        }
       }
     }
   };
@@ -219,36 +200,6 @@ const SignupPage = () => {
               )}
             </div>
 
-            {/* <div className="mb-3">
-              <button
-                type="button"
-                className="btn btn-primary w-100"
-                onClick={sendOtp}
-              >
-                Send OTP
-              </button>
-            </div> */}
-            {/* <div className="mb-3">
-              <input
-                type="text"
-                id="otp"
-                name="otp"
-                className={`form-control ${errors.otp ? "is-invalid" : ""}`}
-                value={formData.otp}
-                onChange={handleChange}
-                placeholder="Enter OTP"
-                style={{
-                  borderRadius: "8px",
-                  border: "none",
-                  padding: "10px",
-                  backgroundColor: "#f5f5f5",
-                }}
-              />
-              {errors.otp && (
-                <div className="invalid-feedback">{errors.otp}</div>
-              )}
-            </div> */}
-
             <div className="mb-3">
               <input
                 type="password"
@@ -315,23 +266,40 @@ const SignupPage = () => {
           <div className="text-center mt-4">
             <p>Or sign up with</p>
             <div className="d-flex justify-content-center gap-3">
-              <button
-                className="btn btn-outline-secondary"
-                style={{
-                  borderRadius: "50%",
-                  padding: "10px",
-                  transition: "transform 0.3s",
+              <GoogleLogin
+                onSuccess={async (credentialResponse) => {
+                  try {
+                    const response = await axios.post(
+                      "http://localhost:4503/api/google-login",
+                      {
+                        credential: credentialResponse.credential,
+                      }
+                    );
+                    if (response.data && response.data.user) {
+                      // Normalize user object - map picture to profileImage
+                      const normalizedUser = {
+                        ...response.data.user,
+                        profileImage:
+                          response.data.user.profileImage ||
+                          response.data.user.picture ||
+                          "",
+                      };
+
+                      localStorage.setItem(
+                        "user",
+                        JSON.stringify(normalizedUser)
+                      );
+                      navigate("/login");
+                    } else {
+                      alert("Google signup failed.");
+                    }
+                  } catch (err) {
+                    alert("Google signup failed.");
+                  }
                 }}
-              >
-                <img
-                  src={google}
-                  alt="google"
-                  style={{
-                    width: "24px",
-                    height: "24px",
-                  }}
-                />
-              </button>
+                onError={() => alert("Google signup failed.")}
+                width="100%"
+              />
               <button
                 className="btn btn-outline-secondary"
                 style={{

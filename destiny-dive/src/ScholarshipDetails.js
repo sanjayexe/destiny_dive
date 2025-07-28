@@ -6,6 +6,8 @@ import back_btn from "./images/back-btn.png";
 import continue_btn from "./images/continue-btn.png";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
+import axios from "axios";
+import { useEffect } from "react";
 const ScholarshipDetails = () => {
   const navigate = useNavigate();
   // Initial Scholarship Data
@@ -57,7 +59,18 @@ const ScholarshipDetails = () => {
       deadline: "10th June 2025",
     },
   ];
-
+  const [scholarships, setScholarships] = useState([]);
+  const fetchScholarships = async () => {
+    try {
+      const response = await axios.get("http://localhost:4503/scholarship");
+      setScholarships(response.data);
+    } catch (error) {
+      console.error("Error fetching scholarships:", error);
+    }
+  };
+  useEffect(() => {
+    fetchScholarships();
+  }, []);
   // States
   const [scholarshipData, setScholarshipData] = useState(initialData);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -77,18 +90,14 @@ const ScholarshipDetails = () => {
   // View Button Handler
   const handleViewDetails = (scholarship) => {
     alert(`Viewing details for: ${scholarship.name}`);
+    navigate("/scForm");
     // Optionally navigate to a detailed view page or show a modal
   };
 
   return (
     <>
-      <div className="position-absolute  top-0 end-0 m-3">
-        <img
-          src={logo}
-          alt="University Logo"
-          style={{ height: "70px", cursor: "pointer" }}
-        />
-      </div>
+      <Navbar />
+      <div className="position-absolute  top-0 end-0 m-3"></div>
       <div
         className="position-absolute top-0 start-0 m-3"
         onClick={() => navigate(-1)}

@@ -1,21 +1,15 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./navbar.css"; // Import the CSS file
 import logo from "./images/navlogo.png";
 import defaultProfilePic from "./images/default-profile.png";
+import { UserContext } from "./UserContext";
 
 const Navbar = () => {
-  const [user, setUser] = useState(null);
-  useEffect(() => {
-    // Retrieve user data from localStorage
-    const loggedInUser = JSON.parse(localStorage.getItem("user"));
-    if (loggedInUser) {
-      setUser(loggedInUser);
-    }
-  }, []);
+  const { user, setUser } = useContext(UserContext);
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -90,7 +84,7 @@ const Navbar = () => {
                   aria-expanded="false"
                 >
                   <img
-                    src={user.profilePic || defaultProfilePic}
+                    src={user.profileImage || defaultProfilePic}
                     alt="Profile"
                     className="rounded-circle"
                     style={{

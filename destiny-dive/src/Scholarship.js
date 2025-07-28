@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import sc1 from "./images/scholarship1.png";
 import sc2 from "./images/scholarship2.png";
+import ScholarshipDetails from "./ScholarshipDetails";
 
 const Scholarship = () => {
   const navigate = useNavigate();
@@ -39,9 +40,9 @@ const Scholarship = () => {
         <div className="d-flex justify-content-center">
           <button
             className="btn btn-primary mt-4"
-            onClick={() => navigate("/scForm")}
+            onClick={() => navigate("/scdetails")}
           >
-            Visit
+            Submit
           </button>
         </div>
       </div>

@@ -30,7 +30,7 @@ const ApplicationForm = () => {
       setSubmittedData(finalData);
 
       const response = await axios.post(
-        "http://localhost:4500/applications",
+        "http://localhost:4503/applications",
         finalData
       );
       console.log("Form Submitted Successfully: ", response.data);

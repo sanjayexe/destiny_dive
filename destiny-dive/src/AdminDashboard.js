@@ -10,18 +10,22 @@ const AdminDashboard = () => {
   const [universities, setUniversities] = useState([]);
   const [applications, setApplications] = useState([]);
   const [activeSection, setActiveSection] = useState("users"); // Default: show Users section
+  const [collegeInfos, setCollegeInfos] = useState([]);
+  const [allApplications, setAllApplications] = useState([]);
 
   // Fetch data on component mount
   useEffect(() => {
     fetchUsers();
     fetchUniversities();
     fetchApplications();
+    fetchCollegeInfos();
+    fetchAllApplications();
   }, []);
 
   // API Call for Users
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:4502/users");
+      const response = await axios.get("http://localhost:4503/users");
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -31,7 +35,7 @@ const AdminDashboard = () => {
   // API Call for Universities
   const fetchUniversities = async () => {
     try {
-      const response = await axios.get("http://localhost:4502/universities");
+      const response = await axios.get("http://localhost:4503/colleges");
       setUniversities(response.data);
     } catch (error) {
       console.error("Error fetching universities:", error);
@@ -41,12 +45,42 @@ const AdminDashboard = () => {
   // API Call for Applications
   const fetchApplications = async () => {
     try {
-      const response = await axios.get("http://localhost:4502/applications");
+      const response = await axios.get("http://localhost:4503/scholarships");
       setApplications(response.data);
     } catch (error) {
       console.error("Error fetching applications:", error);
     }
   };
+
+  const fetchCollegeInfos = async () => {
+    try {
+      const response = await axios.get("http://localhost:4503/collegeinfos");
+      setCollegeInfos(response.data);
+    } catch (error) {
+      console.error("Error fetching college infos:", error);
+    }
+  };
+
+  // Fetch all application forms (not just scholarships)
+  const fetchAllApplications = async () => {
+    try {
+      const response = await axios.get("http://localhost:4503/applications");
+      setAllApplications(response.data);
+    } catch (error) {
+      console.error("Error fetching all applications:", error);
+    }
+  };
+
+  // Divide applications by status
+  const pendingApplications = applications.filter(
+    (app) => app.status === "Pending"
+  );
+  const acceptedApplications = applications.filter(
+    (app) => app.status === "Accepted"
+  );
+  const rejectedApplications = applications.filter(
+    (app) => app.status === "Rejected"
+  );
 
   return (
     <div className="container mt-4">
@@ -87,8 +121,36 @@ const AdminDashboard = () => {
             }`}
             style={{ cursor: "pointer" }}
           >
+            <img src={application} alt="Scholarship Forms" />
+            <h4>{applications.length} Scholarship Forms</h4>
+          </div>
+        </div>
+        <div
+          className="col-md-4"
+          onClick={() => setActiveSection("allApplications")}
+        >
+          <div
+            className={`p-3 border rounded ${
+              activeSection === "allApplications" ? " text-white" : ""
+            }`}
+            style={{ cursor: "pointer" }}
+          >
             <img src={application} alt="Applications" />
-            <h4>{applications.length} Applications</h4>
+            <h4>{allApplications.length} Applications</h4>
+          </div>
+        </div>
+        <div
+          className="col-md-4"
+          onClick={() => setActiveSection("collegeinfos")}
+        >
+          <div
+            className={`p-3 border rounded ${
+              activeSection === "collegeinfos" ? " text-white" : ""
+            }`}
+            style={{ cursor: "pointer" }}
+          >
+            <img src={college} alt="College Info" />
+            <h4>{collegeInfos.length} College Infos</h4>
           </div>
         </div>
       </div>
@@ -102,20 +164,18 @@ const AdminDashboard = () => {
               <thead>
                 <tr>
                   <th>USER NAME</th>
-                  <th>DOB</th>
-                  <th>Phone Number</th>
-                  <th>City</th>
-                  <th>Field of Interest</th>
+                  <th>EMAIL</th>
+                  <th>PHONE NUMBER</th>
+                  <th>ABOUT</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((user) => (
                   <tr key={user.id}>
-                    <td>{user.name}</td>
-                    <td>{user.dob}</td>
-                    <td>{user.phone}</td>
-                    <td>{user.city}</td>
-                    <td>{user.fieldOfInterest}</td>
+                    <td>{user.username}</td>
+                    <td>{user.email}</td>
+                    <td>{user.phoneNumber}</td>
+                    <td>{user.about}</td>
                   </tr>
                 ))}
               </tbody>
@@ -150,12 +210,238 @@ const AdminDashboard = () => {
 
         {activeSection === "applications" && (
           <>
-            <h5 className="mb-3">Applications</h5>
-            <div className="d-grid gap-2 col-md-6 mx-auto">
-              <button className="btn btn-secondary">Yet to see forms</button>
-              <button className="btn btn-success">Approved Forms</button>
-              <button className="btn btn-warning">Pending Forms</button>
-              <button className="btn btn-danger">Rejected Forms</button>
+            <h5 className="mb-3">Scholarship Forms</h5>
+            <div className="mb-4 d-flex justify-content-center">
+              <button
+                className="btn btn-warning me-2"
+                onClick={() => setActiveSection("pendingApplications")}
+              >
+                Pending ({pendingApplications.length})
+              </button>
+              <button
+                className="btn btn-success me-2"
+                onClick={() => setActiveSection("acceptedApplications")}
+              >
+                Accepted ({acceptedApplications.length})
+              </button>
+              <button
+                className="btn btn-danger"
+                onClick={() => setActiveSection("rejectedApplications")}
+              >
+                Rejected ({rejectedApplications.length})
+              </button>
+            </div>
+            <table className="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Applicant Name</th>
+                  <th>Email</th>
+                  <th>Mobile</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {applications.map((app) => (
+                  <tr key={app._id}>
+                    <td>{app.fullName || app.userName}</td>
+                    <td>{app.userEmail || app.email}</td>
+                    <td>{app.mobileNumber}</td>
+                    <td>{app.status}</td>
+
+                    <td className="d-flex justify-content-center">
+                      {app.status === "Pending" && (
+                        <>
+                          <button
+                            className="btn btn-success btn-sm me-2"
+                            onClick={async () => {
+                              await axios.patch(
+                                `http://localhost:4503/scholarships/${app._id}/accept`
+                              );
+                              fetchApplications();
+                            }}
+                          >
+                            Accept
+                          </button>
+                          <button
+                            className="btn btn-danger btn-sm"
+                            onClick={async () => {
+                              await axios.patch(
+                                `http://localhost:4503/scholarships/${app._id}/reject`
+                              );
+                              fetchApplications();
+                            }}
+                          >
+                            Reject
+                          </button>
+                        </>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+        {activeSection === "pendingApplications" && (
+          <>
+            <h5 className="mb-3">Pending Scholarship Forms</h5>
+            <table className="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Applicant Name</th>
+                  <th>Email</th>
+                  <th>Mobile</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pendingApplications.map((app) => (
+                  <tr key={app._id}>
+                    <td>{app.fullName || app.userName}</td>
+                    <td>{app.userEmail || app.email}</td>
+                    <td>{app.mobileNumber}</td>
+                    <td>{app.status}</td>
+                    <td>
+                      <button
+                        className="btn btn-success btn-sm me-2"
+                        onClick={async () => {
+                          await axios.patch(
+                            `http://localhost:4503/scholarships/${app._id}/accept`
+                          );
+                          fetchApplications();
+                        }}
+                      >
+                        Accept
+                      </button>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={async () => {
+                          await axios.patch(
+                            `http://localhost:4503/scholarships/${app._id}/reject`
+                          );
+                          fetchApplications();
+                        }}
+                      >
+                        Reject
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+        {activeSection === "acceptedApplications" && (
+          <>
+            <h5 className="mb-3">Accepted Scholarship Forms</h5>
+            <table className="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Applicant Name</th>
+                  <th>Email</th>
+                  <th>Mobile</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {acceptedApplications.map((app) => (
+                  <tr key={app._id}>
+                    <td>{app.fullName || app.userName}</td>
+                    <td>{app.userEmail || app.email}</td>
+                    <td>{app.mobileNumber}</td>
+                    <td>{app.status}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+        {activeSection === "rejectedApplications" && (
+          <>
+            <h5 className="mb-3">Rejected Scholarship Forms</h5>
+            <table className="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Applicant Name</th>
+                  <th>Email</th>
+                  <th>Mobile</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rejectedApplications.map((app) => (
+                  <tr key={app._id}>
+                    <td>{app.fullName || app.userName}</td>
+                    <td>{app.userEmail || app.email}</td>
+                    <td>{app.mobileNumber}</td>
+                    <td>{app.status}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+
+        {activeSection === "allApplications" && (
+          <>
+            <h5 className="mb-3">All College Applications</h5>
+            <table className="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Applicant Name</th>
+                  <th>Email</th>
+                  <th>College</th>
+                  <th>Type</th>
+                  <th>Submission Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allApplications.map((app) => (
+                  <tr key={app._id}>
+                    <td>{app.fullName}</td>
+                    <td>{app.email}</td>
+                    <td>{app.collegeName}</td>
+                    <td>{app.Type}</td>
+                    <td>{app.submissionDate}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+
+        {activeSection === "collegeinfos" && (
+          <>
+            <h5 className="mb-3">College Info (from DB)</h5>
+            <div className="row">
+              {collegeInfos.map((info) => (
+                <div key={info._id} className="col-md-6 mb-4">
+                  <div className="card">
+                    <img
+                      src={info.image}
+                      className="card-img-top"
+                      alt={info.name}
+                      style={{ maxHeight: "200px", objectFit: "cover" }}
+                    />
+                    <div className="card-body">
+                      <h5 className="card-title">{info.name}</h5>
+                      <p className="card-text">{info.about}</p>
+                      <ul>
+                        {info.courses &&
+                          info.courses.map((course, idx) => (
+                            <li key={idx}>
+                              <strong>{course.category}:</strong>{" "}
+                              {course.popularCourses} ({course.fees})
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </>
         )}

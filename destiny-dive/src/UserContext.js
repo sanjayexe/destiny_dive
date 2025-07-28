@@ -4,10 +4,27 @@ import React, { createContext, useState } from "react";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // Store user data
+  // Normalize user object - ensure profileImage is always available
+  const normalizeUser = (userObj) => {
+    if (!userObj) return null;
+    return {
+      ...userObj,
+      profileImage: userObj.profileImage || userObj.picture || "",
+    };
+  };
+
+  const [user, setUser] = useState(() => {
+    const stored = localStorage.getItem("user");
+    return stored ? normalizeUser(JSON.parse(stored)) : null;
+  });
+
+  // Wrapper function to normalize user before setting
+  const setNormalizedUser = (newUser) => {
+    setUser(normalizeUser(newUser));
+  };
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser: setNormalizedUser }}>
       {children}
     </UserContext.Provider>
   );

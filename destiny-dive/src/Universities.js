@@ -25,14 +25,37 @@ import finance from "./major-images/finance.png";
 import eng from "./major-images/eng.png";
 import med from "./major-images/med.png";
 
+const statesWithImages = [
+  { name: "Mumbai", img: mumbai },
+  { name: "Kolkata", img: Kolkata },
+  { name: "Chennai", img: chennai },
+  { name: "Ahmedabad", img: ahemedabad },
+  { name: "Delhi", img: delhi },
+  { name: "Bengaluru", img: bengaluru },
+];
+
+const majors = [
+  { name: "Management", img: Management },
+  { name: "Engineering", img: eng },
+  { name: "Finance and Bank", img: finance },
+  { name: "Medicine", img: med },
+  { name: "Architecture", img: archi },
+  { name: "Law", img: law },
+];
+
+const degreeOptions = [
+  { name: "Bachelors", img: bsc },
+  { name: "Masters", img: msc },
+  { name: "MBA", img: mba },
+];
+
 const Universities = () => {
   const location = useLocation();
   const type = location.state?.type;
-
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    type: type,
+    type: type || "",
     degree: "",
     state: "",
     educationLevel: "",
@@ -40,84 +63,79 @@ const Universities = () => {
     occupation: "", //masters,mba
     courseBased: "", //mba
     board: "",
-    percentage: null,
+    percentage: "",
     major: "",
   });
   const [searchQuery, setSearchQuery] = useState("");
   const [errors, setErrors] = useState({});
 
-  const statesWithImages = [
-    { name: "Mumbai", img: mumbai },
-    {
-      name: "Kolkata",
-      img: Kolkata,
-    },
-    {
-      name: "Chennai",
-      img: chennai,
-    },
-    {
-      name: "Ahmedabad",
-      img: ahemedabad,
-    },
-    { name: "Delhi", img: delhi },
-    {
-      name: "Bengaluru",
-      img: bengaluru,
-    },
-  ];
-
-  const majors = [
-    { name: "Management", img: Management },
-    { name: "Engineering", img: eng },
-    { name: "Finance and Bank", img: finance },
-    { name: "Medicine", img: med },
-    { name: "Architecture", img: archi },
-    { name: "Law", img: law },
-  ];
-
-  const handleNextStep = () => {
+  // Centralized validation for each step
+  const validateStep = () => {
     const newErrors = {};
+    if (step === 1 && !formData.degree)
+      newErrors.degree = "Please select a degree.";
+    if (step === 2 && type !== "Abroad" && !formData.state)
+      newErrors.state = "Please select a state.";
     if (step === 3) {
-      if (!formData.educationLevel)
-        newErrors.educationLevel = "Please select your education level.";
-      if (!formData.board) newErrors.board = "Please select your board.";
-      if (formData.percentage <= 0 && formData.percentage > 100) {
-        newErrors.newpercentage = "Please enter valid percentage.";
-      }
-      if (!formData.percentage)
-        newErrors.percentage = "Please enter your percentage.";
-      if (formData.degree != "Bachelors") {
-        setStep(step + 2);
+      if (formData.degree === "Bachelors") {
+        if (!formData.educationLevel)
+          newErrors.educationLevel = "Please select your education level.";
+        if (!formData.board) newErrors.board = "Please select your board.";
+        if (
+          !formData.percentage ||
+          formData.percentage < 0 ||
+          formData.percentage > 100
+        )
+          newErrors.percentage = "Please enter a valid percentage (0-100).";
+      } else if (formData.degree === "Masters") {
+        if (!formData.occupation)
+          newErrors.occupation = "Please select your occupation.";
+        if (!formData.frstDegree)
+          newErrors.frstDegree = "Please select your Masters degree base.";
+        if (
+          !formData.percentage ||
+          formData.percentage < 0 ||
+          formData.percentage > 100
+        )
+          newErrors.percentage = "Please enter a valid GPA (0-100).";
+      } else if (formData.degree === "MBA") {
+        if (!formData.occupation)
+          newErrors.occupation = "Please select your occupation.";
+        if (!formData.courseBased)
+          newErrors.courseBased = "Please select your MBA course base.";
+        if (
+          !formData.percentage ||
+          formData.percentage < 0 ||
+          formData.percentage > 100
+        )
+          newErrors.percentage = "Please enter a valid percentage (0-100).";
       }
     }
+    if (step === 4 && formData.degree === "Bachelors" && !formData.major)
+      newErrors.major = "Please select a major.";
+    return newErrors;
+  };
 
+  const handleNextStep = () => {
+    const newErrors = validateStep();
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) setStep(step + 1);
   };
 
   const handlePrevStep = () => {
-    if (type === "Abroad" && step === 3) {
-      setStep(1);
-    }
-    if (type === "Abroad" && step != 3) setStep(step - 1); //normal back button if its not 3rd step
-    if (type !== "Abroad") setStep(step - 1);
-    if (step === 5 && formData.degree != "Bachelors") setStep(step - 2);
+    if (step === 1) return;
+    if (step === 4 && formData.degree !== "Bachelors") setStep(step - 2);
+    else setStep(step - 1);
   };
 
   const handleChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
-    if (errors[field]) {
-      setErrors({ ...errors, [field]: "" });
-    }
-    if (field === "degree") {
-      setStep(type === "Abroad" ? 3 : 2);
-    }
+    if (errors[field]) setErrors({ ...errors, [field]: "" });
+    if (field === "degree") setStep(type === "Abroad" ? 3 : 2);
   };
 
-  const handleSearch = (event) => {
+  const handleSearch = (event) =>
     setSearchQuery(event.target.value.toLowerCase());
-  };
 
   const filteredStates = statesWithImages.filter((state) =>
     state.name.toLowerCase().includes(searchQuery)
@@ -125,13 +143,18 @@ const Universities = () => {
 
   const handleStateSelection = (stateName) => {
     setFormData({ ...formData, state: stateName });
-    setStep(3); // Move to the next step
+    setStep(3);
+  };
+
+  // Final step: pass all formData to CollegeList
+  const handleViewColleges = () => {
+    console.log("Navigating to CollegeList with formData:", formData);
+    navigate("/colleges", { state: { formData } });
   };
 
   return (
     <>
       <div className="container-fluid bg-light vh-100 position-relative">
-        {/* Back Icon at Top Left */}
         {step > 1 && (
           <div
             className="position-absolute top-0 start-0 m-3"
@@ -141,7 +164,6 @@ const Universities = () => {
             <img src={back_btn} alt="" height={"auto"} width={"50px"} />
           </div>
         )}
-        {/* Logo at Top Right */}
         <div className="position-absolute  top-0 end-0 m-3">
           <img
             src={logo}
@@ -149,7 +171,6 @@ const Universities = () => {
             style={{ height: "70px", cursor: "pointer" }}
           />
         </div>
-        {/* Main Content */}
         <div className="d-flex justify-content-center align-items-center vh-100">
           <div
             className="card shadow-lg  mt-5   p-4 w-100 col-11 col-md-8 col-lg-6"
@@ -162,13 +183,11 @@ const Universities = () => {
                 <span className="text-primary">{formData.degree}</span>
               </p>
             )}
-            {/* Header */}
             <div className="text-center mb-4 ">
               <h4 className="fw-bold text-dark">
                 {step === 1 && "Which Degree do you Wish to Pursue?"}
                 {step === 2 &&
                   "Which State Do You Wish to Pursue Your Education In?"}
-
                 {step === 3 &&
                   formData.degree === "Bachelors" &&
                   "What is Your Highest Education Level?"}
@@ -182,15 +201,9 @@ const Universities = () => {
                 {step === 5 && "Summary of Your Selection"}
               </h4>
             </div>
-
-            {/* Content Based on Step */}
             {step === 1 && (
               <div className="text-center d-flex justify-content-evenly">
-                {[
-                  { name: "Bachelors", img: bsc },
-                  { name: "Masters", img: msc },
-                  { name: "MBA", img: mba },
-                ].map((degree) => (
+                {degreeOptions.map((degree) => (
                   <div
                     key={degree.name}
                     className={`degree-option mb-3 ${
@@ -208,12 +221,13 @@ const Universities = () => {
                     <p className="mt-2 fw-semibold fs-5 ">{degree.name}</p>
                   </div>
                 ))}
+                {errors.degree && (
+                  <p className="text-danger">{errors.degree}</p>
+                )}
               </div>
             )}
-
             {step === 2 && (
               <div>
-                {/* Search Bar */}
                 <div className="mb-3">
                   <input
                     type="text"
@@ -223,7 +237,6 @@ const Universities = () => {
                     onChange={handleSearch}
                   />
                 </div>
-
                 <div className="d-flex flex-wrap align-items-center justify-content-center  ">
                   {filteredStates.map((state) => (
                     <div
@@ -246,16 +259,16 @@ const Universities = () => {
                       <p className="mt-2">{state.name}</p>
                     </div>
                   ))}
+                  {errors.state && (
+                    <p className="text-danger">{errors.state}</p>
+                  )}
                 </div>
               </div>
             )}
-
             {step === 3 && (
               <div>
-                {/* Masters-Specific Question */}
                 {formData.degree === "Masters" ? (
                   <>
-                    {/* Occupation Question */}
                     <div className="text-center mb-3 d-sm-flex d-block">
                       <button
                         className={`rounded-2 btn mx-2 rounded-5 board mb-1 ${
@@ -269,7 +282,6 @@ const Universities = () => {
                       >
                         Bachelor Graduate
                       </button>
-
                       <button
                         className={`rounded-2 btn mx-2 rounded-5 board mb-1 ${
                           formData.occupation === "An Employee"
@@ -288,8 +300,6 @@ const Universities = () => {
                         {errors.occupation}
                       </p>
                     )}
-
-                    {/* Masters Degree-Based Question */}
                     <div className="mt-4">
                       <center>
                         <label
@@ -321,7 +331,6 @@ const Universities = () => {
                   </>
                 ) : formData.degree === "MBA" ? (
                   <>
-                    {/* Occupation Question */}
                     <div className="text-center mb-3 d-flex">
                       <button
                         className={`rounded-2 btn mx-2 rounded-5 board mb-1 ${
@@ -335,7 +344,6 @@ const Universities = () => {
                       >
                         Bachelor Graduate
                       </button>
-
                       <button
                         className={`rounded-2 btn mx-2 rounded-5 board mb-1 ${
                           formData.occupation === "An Employee"
@@ -354,8 +362,6 @@ const Universities = () => {
                         {errors.occupation}
                       </p>
                     )}
-
-                    {/* mba Degree-Based Question */}
                     <div className="mt-4">
                       <center>
                         <label
@@ -397,7 +403,6 @@ const Universities = () => {
                     </div>
                   </>
                 ) : (
-                  // Original Grade 12 Block (for non-Masters degrees)
                   <>
                     <div className="text-center mb-3 d-flex ">
                       <button
@@ -412,7 +417,6 @@ const Universities = () => {
                       >
                         Grade 12
                       </button>
-
                       <button
                         className={`rounded-2 btn mx-2 rounded-5 board mb-1 ${
                           formData.educationLevel === "Undergraduate Diploma"
@@ -434,7 +438,6 @@ const Universities = () => {
                         {errors.educationLevel}
                       </p>
                     )}
-
                     <div className="mt-4">
                       <center>
                         <label
@@ -463,8 +466,6 @@ const Universities = () => {
                     </div>
                   </>
                 )}
-
-                {/* Percentage Section (Common for All Degrees) */}
                 <div className="mt-4">
                   <center>
                     <label
@@ -473,10 +474,8 @@ const Universities = () => {
                     >
                       {formData.degree === "Bachelors" &&
                         " What is Your Expected or Gained Percentage"}
-
                       {formData.degree === "Masters" &&
                         " What is Your Expected or Gained GPA"}
-
                       {formData.degree === "MBA" &&
                         " What is Your Expected or Gained percentage in entrance exam"}
                     </label>
@@ -490,28 +489,12 @@ const Universities = () => {
                     max="100"
                     placeholder="Enter percentage"
                     value={formData.percentage || ""}
-                    onChange={(e) => {
-                      const value = e.target.value;
-                      if (value === "" || (value >= 0 && value <= 100)) {
-                        handleChange("percentage", value);
-                      }
-                    }}
-                    onBlur={(e) => {
-                      const value = e.target.value;
-                      if (value < 0 || value > 100) {
-                        handleChange("percentage", "");
-                      }
-                    }}
+                    onChange={(e) => handleChange("percentage", e.target.value)}
                   />
                   {errors.percentage && (
                     <p className="text-danger">{errors.percentage}</p>
                   )}
-                  {errors.newpercentage && (
-                    <p className="text-danger">{errors.newpercentage}</p>
-                  )}
                 </div>
-
-                {/* Next Button */}
                 <div className="d-flex justify-content-center mt-4">
                   <button
                     className="continue-btn rounded-5"
@@ -521,102 +504,69 @@ const Universities = () => {
                     <img
                       src={continue_btn}
                       className="ms-1"
-                      style={{
-                        maxWidth: "2rem",
-                        //minwidth: "4rem",
-                        height: "auto",
-                      }}
+                      style={{ maxWidth: "2rem", height: "auto" }}
                     />
                   </button>
                 </div>
               </div>
             )}
-
-            {step === 4 &&
-              (formData.degree != "Masters" || formData.degree != "MBA") && (
-                <div>
-                  {/* Search Bar for Majors */}
-                  <div className="mb-3">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Search for more majors..."
-                      value={searchQuery}
-                      onChange={handleSearch}
-                    />
-                  </div>
-
-                  {/* Display Majors */}
-                  <div className="d-flex flex-wrap justify-content-center">
-                    {searchQuery
-                      ? majors
-                          .filter((major) =>
-                            major.name
-                              .toLowerCase()
-                              .includes(searchQuery.toLowerCase())
-                          )
-                          .slice(0, 6) // Limit search results to 6
-                          .map((major) => (
-                            <div
-                              key={major.name}
-                              className="major-option text-center m-sm-3 p-sm-3 m-0 p-2 "
-                              onClick={() => {
-                                handleChange("major", major.name);
-                                handleNextStep(); // Proceed to the next step
-                              }}
-                              style={{ cursor: "pointer" }}
-                            >
-                              <img
-                                src={major.img}
-                                alt={major.name}
-                                width={"43vw"}
-                                height={"auto"}
-                              />
-                              <p className="mt-2 fw-semibold">{major.name}</p>
-                            </div>
-                          ))
-                      : majors
-                          .slice(0, 6) // Display only the first 6 majors when no search is active
-                          .map((major) => (
-                            <div
-                              key={major.name}
-                              className="major-option text-center m-sm-3 p-sm-3 m-0 p-2 "
-                              onClick={() => {
-                                handleChange("major", major.name);
-                                handleNextStep(); // Proceed to the next step
-                              }}
-                              style={{ cursor: "pointer" }}
-                            >
-                              <img
-                                src={major.img}
-                                alt={major.name}
-                                width={"43vw"}
-                                height={"auto"}
-                              />
-                              <p className="mt-2 fw-semibold">{major.name}</p>
-                            </div>
-                          ))}
-                  </div>
-
-                  {/* Error Message for Major Selection */}
-                  {errors.major && (
-                    <p className="text-danger text-center">{errors.major}</p>
-                  )}
+            {step === 4 && formData.degree === "Bachelors" && (
+              <div>
+                <div className="mb-3">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search for more majors..."
+                    value={searchQuery}
+                    onChange={handleSearch}
+                  />
                 </div>
-              )}
-
+                <div className="d-flex flex-wrap justify-content-center">
+                  {(searchQuery
+                    ? majors
+                        .filter((major) =>
+                          major.name
+                            .toLowerCase()
+                            .includes(searchQuery.toLowerCase())
+                        )
+                        .slice(0, 6)
+                    : majors.slice(0, 6)
+                  ).map((major) => (
+                    <div
+                      key={major.name}
+                      className="major-option text-center m-sm-3 p-sm-3 m-0 p-2 "
+                      onClick={() => {
+                        handleChange("major", major.name.toLowerCase());
+                        handleNextStep();
+                      }}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <img
+                        src={major.img}
+                        alt={major.name}
+                        width={"43vw"}
+                        height={"auto"}
+                      />
+                      <p className="mt-2 fw-semibold">{major.name}</p>
+                    </div>
+                  ))}
+                </div>
+                {errors.major && (
+                  <p className="text-danger text-center">{errors.major}</p>
+                )}
+              </div>
+            )}
             {step === 5 && (
               <div className="text-center">
                 <p>University Type: {formData.type}</p>
                 <p>Degree: {formData.degree}</p>
-                {type != "Abroad" && <p>State: {formData.state}</p>}
-
+                {type !== "Abroad" && <p>State: {formData.state}</p>}
                 <p>
                   {formData.degree === "Bachelors" &&
                     `Education Level: ${formData.educationLevel}`}
-                  {formData.degree === "Masters" ||
-                    (formData.degree === "MBA" &&
-                      `Current  Occupation: ${formData.occupation}`)}
+                  {(formData.degree === "Masters" ||
+                    formData.degree === "MBA") &&
+                    `Current  Occupation: ${formData.occupation}`}
                 </p>
                 <p>
                   {formData.degree === "Bachelors" &&
@@ -627,7 +577,6 @@ const Universities = () => {
                     `Course  based  : ${formData.courseBased}`}
                 </p>
                 <p>
-                  {" "}
                   {formData.degree === "Bachelors" &&
                     `Percentage : ${formData.percentage}%`}
                   {formData.degree === "Masters" &&
@@ -639,23 +588,16 @@ const Universities = () => {
                   {formData.degree === "Bachelors" &&
                     `Major : ${formData.major}`}
                 </p>
-                {/* Next Button */}
                 <div className="d-flex justify-content-center mt-4">
                   <button
                     className="continue-btn rounded-5"
-                    onClick={() => {
-                      navigate("/colleges", { state: { formData } });
-                    }}
+                    onClick={handleViewColleges}
                   >
                     View Recommended Colleges
                     <img
                       src={continue_btn}
                       className="ms-1"
-                      style={{
-                        maxWidth: "2rem",
-                        //minwidth: "4rem",
-                        height: "auto",
-                      }}
+                      style={{ maxWidth: "2rem", height: "auto" }}
                     />
                   </button>
                 </div>
