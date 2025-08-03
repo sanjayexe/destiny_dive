@@ -5,6 +5,13 @@ exports.updateUser = async (req, res) => {
   const { id } = req.params;
   const updateData = req.body;
 
+  console.log("User update request:", {
+    userId: id,
+    updateFields: Object.keys(updateData),
+    hasProfileImage: !!updateData.profileImage,
+    hasCustomProfileImage: updateData.hasCustomProfileImage,
+  });
+
   try {
     // Validate the user exists
     const existingUser = await User.findById(id);
@@ -20,6 +27,28 @@ exports.updateUser = async (req, res) => {
       }
     }
 
+    // Validate profile image if it's being updated
+    if (updateData.profileImage) {
+      // Check if it's a valid data URL or URL
+      if (
+        !updateData.profileImage.startsWith("data:image/") &&
+        !updateData.profileImage.startsWith("http://") &&
+        !updateData.profileImage.startsWith("https://")
+      ) {
+        return res
+          .status(400)
+          .json({ message: "Invalid profile image format." });
+      }
+
+      // If it's a data URL (user uploaded image), mark it as custom
+      if (updateData.profileImage.startsWith("data:image/")) {
+        updateData.hasCustomProfileImage = true;
+        console.log(
+          "User update - Setting hasCustomProfileImage to true for uploaded image"
+        );
+      }
+    }
+
     // Update the user
     const updatedUser = await User.findByIdAndUpdate(id, updateData, {
       new: true,
@@ -29,6 +58,13 @@ exports.updateUser = async (req, res) => {
     // Remove password from response
     const userResponse = updatedUser.toObject();
     delete userResponse.password;
+
+    console.log("User updated successfully:", {
+      userId: id,
+      updatedFields: Object.keys(updateData),
+      profileImageUpdated: !!updateData.profileImage,
+      hasCustomProfileImage: updateData.hasCustomProfileImage,
+    });
 
     res.status(200).json({
       message: "User updated successfully",
@@ -64,11 +100,23 @@ exports.updateUser = async (req, res) => {
 exports.getUserById = async (req, res) => {
   const { id } = req.params;
 
+  console.log("Get user by ID request:", { userId: id });
+
   try {
     const user = await User.findById(id).select("-password");
     if (!user) {
+      console.log("Get user by ID - User not found:", id);
       return res.status(404).json({ message: "User not found." });
     }
+
+    console.log("Get user by ID - User found:", {
+      username: user.username,
+      email: user.email,
+      profileImage: user.profileImage,
+      hasProfileImage: !!user.profileImage,
+      hasCustomProfileImage: user.hasCustomProfileImage,
+    });
+
     res.status(200).json(user);
   } catch (error) {
     console.error("Error fetching user:", error);

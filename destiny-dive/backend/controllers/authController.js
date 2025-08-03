@@ -123,11 +123,23 @@ exports.registerUser = async (req, res) => {
 // Login user
 exports.loginUser = async (req, res) => {
   const { emailOrMobile, password } = req.body;
+  console.log("Regular login attempt:", { emailOrMobile });
+
   try {
     // Find user by email or mobileNumber
     const user = await User.findOne({
       $or: [{ email: emailOrMobile }, { mobileNumber: emailOrMobile }],
     });
+    console.log("Regular login - Found user:", user ? "exists" : "not found");
+    if (user) {
+      console.log(
+        "Regular login - User profileImage:",
+        user.profileImage,
+        "hasCustomProfileImage:",
+        user.hasCustomProfileImage
+      );
+    }
+
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
@@ -139,6 +151,12 @@ exports.loginUser = async (req, res) => {
     // Remove password from response
     const userResponse = user.toObject();
     delete userResponse.password;
+    console.log("Regular login - Sending user response:", {
+      username: userResponse.username,
+      email: userResponse.email,
+      profileImage: userResponse.profileImage,
+      hasCustomProfileImage: userResponse.hasCustomProfileImage,
+    });
     res.json({ user: userResponse });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
@@ -161,24 +179,49 @@ exports.googleLoginUser = async (req, res) => {
     const { sub, email, name, picture } = payload;
     // Find or create user
     let user = await User.findOne({ email });
+    console.log("Google login - Found user:", user ? "exists" : "not found");
+    console.log("Google login - Picture URL:", picture);
+
     if (!user) {
       user = new User({
         username: name,
         email,
         emailOrMobile: email, // Assign Google email to emailOrMobile
         profileImage: picture,
+        hasCustomProfileImage: false, // Google image is not custom
         googleId: sub,
         provider: "google",
         // No password for Google users
       });
       await user.save();
+      console.log(
+        "Google login - Created new user with Google profileImage:",
+        user.profileImage
+      );
     } else {
-      // Optionally update profile image, provider, and googleId if changed
+      // Only update profile image if user doesn't have a custom profile image
+      // This prevents overwriting user-uploaded images with Google image on subsequent logins
       let updated = false;
-      if (picture && user.profileImage !== picture) {
+
+      // Only set Google profile image if user hasn't uploaded a custom image
+      if (
+        picture &&
+        !user.hasCustomProfileImage &&
+        user.profileImage !== picture
+      ) {
         user.profileImage = picture;
         updated = true;
+        console.log(
+          "Google login - Updated profileImage to Google image:",
+          picture
+        );
+      } else if (user.hasCustomProfileImage) {
+        console.log(
+          "Google login - Preserving custom profile image:",
+          user.profileImage
+        );
       }
+
       if (!user.googleId) {
         user.googleId = sub;
         updated = true;
@@ -187,11 +230,24 @@ exports.googleLoginUser = async (req, res) => {
         user.provider = "google";
         updated = true;
       }
-      if (updated) await user.save();
+      if (updated) {
+        await user.save();
+        console.log("Google login - Updated existing user");
+      } else {
+        console.log(
+          "Google login - No updates needed, preserving existing data"
+        );
+      }
     }
     // Remove password from response
     const userResponse = user.toObject();
     delete userResponse.password;
+    console.log("Google login - Sending user response:", {
+      username: userResponse.username,
+      email: userResponse.email,
+      profileImage: userResponse.profileImage,
+      hasCustomProfileImage: userResponse.hasCustomProfileImage,
+    });
     res.json({ user: userResponse });
   } catch (err) {
     console.error("Google login error:", err);

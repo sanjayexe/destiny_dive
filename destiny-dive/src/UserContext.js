@@ -15,12 +15,24 @@ export const UserProvider = ({ children }) => {
 
   const [user, setUser] = useState(() => {
     const stored = localStorage.getItem("user");
-    return stored ? normalizeUser(JSON.parse(stored)) : null;
+    const normalizedUser = stored ? normalizeUser(JSON.parse(stored)) : null;
+    console.log("UserContext - Initializing user:", {
+      hasStoredUser: !!stored,
+      hasNormalizedUser: !!normalizedUser,
+      profileImage: normalizedUser?.profileImage,
+    });
+    return normalizedUser;
   });
 
   // Wrapper function to normalize user before setting
   const setNormalizedUser = (newUser) => {
-    setUser(normalizeUser(newUser));
+    const normalized = normalizeUser(newUser);
+    console.log("UserContext - Setting normalized user:", {
+      hasNewUser: !!newUser,
+      hasNormalizedUser: !!normalized,
+      profileImage: normalized?.profileImage,
+    });
+    setUser(normalized);
   };
 
   return (

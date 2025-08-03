@@ -34,6 +34,10 @@ const userSchema = new mongoose.Schema(
     profileImage: {
       type: String,
     },
+    hasCustomProfileImage: {
+      type: Boolean,
+      default: false,
+    },
     googleId: {
       type: String,
       unique: true,

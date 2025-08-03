@@ -93,6 +93,19 @@ const Navbar = () => {
                       objectFit: "cover",
                       marginRight: "10px",
                     }}
+                    onError={(e) => {
+                      console.log(
+                        "Navbar - Image failed to load, using default:",
+                        e.target.src
+                      );
+                      e.target.src = defaultProfilePic;
+                    }}
+                    onLoad={(e) => {
+                      console.log(
+                        "Navbar - Image loaded successfully:",
+                        e.target.src
+                      );
+                    }}
                   />
                   {user.username}
                 </a>

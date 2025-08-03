@@ -26,10 +26,44 @@ function ProfilePage() {
   const [editFields, setEditFields] = useState({}); // Track edit states for fields
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [uploadProgress, setUploadProgress] = useState("");
 
   // States for "See More" functionality
   const [showMoreStatus, setShowMoreStatus] = useState(false);
   const [showMoreWishlist, setShowMoreWishlist] = useState(false);
+
+  // Function to refresh user data from database
+  const refreshUserData = async () => {
+    try {
+      const userId = user?.id || user?._id || profile?.id || profile?._id;
+      if (!userId) {
+        console.log("ProfilePage - No user ID found for refresh");
+        return;
+      }
+
+      console.log("ProfilePage - Refreshing user data from database...");
+      const response = await axios.get(
+        `http://localhost:4503/api/users/${userId}`
+      );
+      const refreshedUser = response.data;
+
+      console.log("ProfilePage - Refreshed user data:", {
+        username: refreshedUser.username,
+        profileImage: refreshedUser.profileImage,
+        hasProfileImage: !!refreshedUser.profileImage,
+      });
+
+      setUser(refreshedUser);
+      setProfile(refreshedUser);
+      localStorage.setItem("user", JSON.stringify(refreshedUser));
+
+      if (refreshedUser.profileImage) {
+        setImage(refreshedUser.profileImage);
+      }
+    } catch (error) {
+      console.error("ProfilePage - Error refreshing user data:", error);
+    }
+  };
 
   // Initialize profile data
   useEffect(() => {
@@ -37,10 +71,12 @@ function ProfilePage() {
     console.log("ProfilePage - Initializing profile data:", {
       user: user ? "exists" : "null",
       storedUser: storedUser ? "exists" : "null",
-      userProfileImage: user?.picture ? "has image" : "no image",
+      userProfileImage: user?.profileImage ? "has image" : "no image",
       storedUserProfileImage: storedUser?.profileImage
         ? "has image"
         : "no image",
+      userProfileImageValue: user?.profileImage,
+      storedUserProfileImageValue: storedUser?.profileImage,
     });
 
     if (user) {
@@ -57,12 +93,30 @@ function ProfilePage() {
 
   // Load profile image
   useEffect(() => {
+    console.log("ProfilePage - Loading profile image:", {
+      user: user ? "exists" : "null",
+      userProfileImage: user?.profileImage,
+      profileProfileImage: profile?.profileImage,
+      currentImage: image,
+    });
+
     if (user && user.profileImage) {
+      console.log(
+        "ProfilePage - Setting image from user.profileImage:",
+        user.profileImage
+      );
       setImage(user.profileImage);
+    } else if (profile && profile.profileImage) {
+      console.log(
+        "ProfilePage - Setting image from profile.profileImage:",
+        profile.profileImage
+      );
+      setImage(profile.profileImage);
     } else {
+      console.log("ProfilePage - No profile image found, setting empty");
       setImage(""); // fallback if needed
     }
-  }, [user]);
+  }, [user, profile]);
 
   const handleEditToggle = (field) => {
     setEditFields((prev) => ({ ...prev, [field]: !prev[field] }));
@@ -209,6 +263,7 @@ function ProfilePage() {
 
       setLoading(true);
       setError("");
+      setUploadProgress("Compressing image...");
 
       try {
         // Compress the image
@@ -221,26 +276,62 @@ function ProfilePage() {
             "Image is still too large after compression. Please try a smaller image."
           );
           setLoading(false);
+          setUploadProgress("");
           return;
         }
 
+        setUploadProgress("Saving to database...");
+
+        // Get user ID
+        const userId = user?.id || user?._id || profile?.id || profile?._id;
+        if (!userId) {
+          setError("User ID not found. Please try logging in again.");
+          setLoading(false);
+          return;
+        }
+
+        // Save to database
+        const response = await axios.put(
+          `http://localhost:4503/api/users/${userId}`,
+          {
+            profileImage: compressedImageData,
+          }
+        );
+
+        // Update local state with response from server
+        const updatedUser = response.data.user;
         setImage(compressedImageData);
-        // Update both user context and profile state
-        const updatedUser = { ...user, profileImage: compressedImageData };
         setUser(updatedUser);
         setProfile(updatedUser);
         localStorage.setItem("user", JSON.stringify(updatedUser));
 
         setError(""); // Clear any previous errors
         setLoading(false);
+        setUploadProgress("");
+
+        // Show success message
+        setTimeout(() => {
+          alert("Profile picture updated successfully!");
+        }, 100);
       } catch (error) {
         console.error("Error saving profile image:", error);
         if (error.response?.status === 413) {
           setError("Image is too large. Please try a smaller image.");
+        } else if (error.response?.status === 404) {
+          setError("User not found. Please try logging in again.");
+        } else if (error.response?.status === 400) {
+          setError(error.response.data.message || "Invalid image format.");
+        } else if (error.response?.data?.message) {
+          setError(error.response.data.message);
+        } else if (error.code === "NETWORK_ERROR") {
+          setError(
+            "Network error. Please check your connection and try again."
+          );
         } else {
           setError("Failed to save profile image. Please try again.");
         }
         setLoading(false);
+        setUploadProgress("");
       }
     }
   };
@@ -303,6 +394,19 @@ function ProfilePage() {
                     height: "60px",
                     objectFit: "cover",
                     marginRight: "10px",
+                  }}
+                  onError={(e) => {
+                    console.log(
+                      "ProfilePage - Image failed to load, using default:",
+                      e.target.src
+                    );
+                    e.target.src = defaultProfilePic;
+                  }}
+                  onLoad={(e) => {
+                    console.log(
+                      "ProfilePage - Image loaded successfully:",
+                      e.target.src
+                    );
                   }}
                 />
                 <span style={{ marginLeft: "5px" }}>
@@ -384,9 +488,18 @@ function ProfilePage() {
         >
           <div className="d-flex justify-content-between align-items-center">
             <h3 className="text-white">My Profile</h3>
-            <button className="btn btn-light">
-              {loading ? "Saving..." : "My Data"}
-            </button>
+            <div className="d-flex gap-2">
+              <button
+                className="btn btn-outline-light btn-sm"
+                onClick={refreshUserData}
+                title="Refresh profile data from database"
+              >
+                🔄 Refresh
+              </button>
+              <button className="btn btn-light">
+                {loading ? "Saving..." : "My Data"}
+              </button>
+            </div>
           </div>
         </div>
         <div className="container px-sm-5 " style={{ marginTop: "-15vh" }}>
@@ -404,28 +517,55 @@ function ProfilePage() {
                       src={
                         image ||
                         user?.profileImage ||
-                        user?.picture ||
                         profile?.profileImage ||
-                        profile?.picture ||
-                        "https://via.placeholder.com/80"
-                      } // Placeholder avatar
+                        defaultProfilePic
+                      }
                       alt="profile"
                       className="rounded-circle"
-                      style={{ width: "110px", height: "110px" }}
+                      style={{
+                        width: "110px",
+                        height: "110px",
+                        objectFit: "cover",
+                      }}
+                      onError={(e) => {
+                        console.log(
+                          "ProfilePage - Main profile image failed to load, using default:",
+                          e.target.src
+                        );
+                        e.target.src = defaultProfilePic;
+                      }}
+                      onLoad={(e) => {
+                        console.log(
+                          "ProfilePage - Main profile image loaded successfully:",
+                          e.target.src
+                        );
+                      }}
                     />
                     <div
                       className="p-btn ms-auto btn-sm rounded-5"
                       style={{ width: "fit-content" }}
                     >
-                      <label
-                        htmlFor="fileUpload"
-                        className={`btn fw-semibold px-3 ${
-                          loading ? "disabled" : ""
-                        }`}
-                        style={{ opacity: loading ? 0.6 : 1 }}
-                      >
-                        {loading ? "Uploading..." : "Upload Photo"}
-                      </label>
+                      <div>
+                        <label
+                          htmlFor="fileUpload"
+                          className={`btn fw-semibold px-3 ${
+                            loading ? "disabled" : ""
+                          }`}
+                          style={{
+                            opacity: loading ? 0.6 : 1,
+                            cursor: loading ? "not-allowed" : "pointer",
+                          }}
+                        >
+                          {loading ? "Uploading..." : "Upload Photo"}
+                        </label>
+                        {uploadProgress && (
+                          <div className="mt-2">
+                            <small className="text-muted">
+                              {uploadProgress}
+                            </small>
+                          </div>
+                        )}
+                      </div>
                       <input
                         type="file"
                         id="fileUpload"

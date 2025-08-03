@@ -16,7 +16,6 @@ const SignupPage = () => {
     emailOrMobile: "",
     password: "",
     confirmPassword: "",
-    otp: null,
   });
 
   const [errors, setErrors] = useState({});
@@ -276,15 +275,19 @@ const SignupPage = () => {
                       }
                     );
                     if (response.data && response.data.user) {
-                      // Normalize user object - map picture to profileImage
+                      // Ensure profileImage is properly set from Google data
                       const normalizedUser = {
                         ...response.data.user,
-                        profileImage:
-                          response.data.user.profileImage ||
-                          response.data.user.picture ||
-                          "",
+                        profileImage: response.data.user.profileImage || "",
                       };
-
+                      console.log("Google signup successful:", {
+                        username: normalizedUser.username,
+                        email: normalizedUser.email,
+                        profileImage: normalizedUser.profileImage,
+                        hasProfileImage: !!normalizedUser.profileImage,
+                        hasCustomProfileImage:
+                          normalizedUser.hasCustomProfileImage,
+                      });
                       localStorage.setItem(
                         "user",
                         JSON.stringify(normalizedUser)
@@ -294,6 +297,7 @@ const SignupPage = () => {
                       alert("Google signup failed.");
                     }
                   } catch (err) {
+                    console.error("Google signup error:", err);
                     alert("Google signup failed.");
                   }
                 }}
