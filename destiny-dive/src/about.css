@@ -1,0 +1,51 @@
+.about-section {
+  padding: 60px 0;
+}
+
+.about-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.about-icon {
+  color: #007bff;
+  margin-bottom: 1rem;
+}
+
+.about-values {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 2rem;
+}
+
+.about-mission {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 15px;
+  padding: 3rem;
+}
+
+.about-mission h2 {
+  color: white !important;
+}
+
+.cta-section {
+  background-color: #f8f9fa;
+  border-radius: 15px;
+  padding: 3rem;
+  margin-top: 3rem;
+}
+
+@media (max-width: 768px) {
+  .about-mission {
+    padding: 2rem;
+  }
+  
+  .cta-section {
+    padding: 2rem;
+  }
+} 

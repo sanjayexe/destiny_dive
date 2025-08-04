@@ -1,4 +1,6 @@
 import React from "react";
+import { About } from "./About";
+import { Link } from "react-router-dom";
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 import "./footer.css";
 const Footer = () => {
@@ -28,9 +30,9 @@ const Footer = () => {
 
         {/* Links */}
         <div className="mb-4 d-flex justify-content-center flex-wrap gap-5">
-          <a href="#" className="text-white">
-            About
-          </a>
+          <Link to="/about" className="text-white">
+            About Us
+          </Link>
           <a href="#" className="text-white">
             Contact Us
           </a>

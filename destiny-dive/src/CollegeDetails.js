@@ -9,28 +9,118 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 const CollegeDetails = () => {
   const location = useLocation();
   const [college, setCollege] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const collegeName = location.state?.college;
   const collegeType = location.state?.type;
+
   useEffect(() => {
-    console.log(collegeName);
+    console.log("College Name:", collegeName);
+    console.log("College Type:", collegeType);
+
     if (collegeName) {
+      setLoading(true);
+      setError(null);
+
       axios
-        .get(`http://localhost:4503/collegeinfos?name=${collegeName}`)
+        .get(
+          `http://localhost:4503/collegeinfos?name=${encodeURIComponent(
+            collegeName
+          )}`
+        )
         .then((response) => {
+          console.log("API Response:", response.data);
           if (response.data.length > 0) {
             setCollege(response.data[0]);
-            console.log(response.data[0]);
+            console.log("Selected College:", response.data[0]);
+          } else {
+            // Try a broader search without the query parameter
+            return axios.get(`http://localhost:4503/collegeinfos`);
           }
         })
-        .catch((error) =>
-          console.error("Error fetching college details:", error)
-        );
+        .then((response) => {
+          if (response && response.data) {
+            console.log("Fallback API Response:", response.data);
+            // Find the college by name in the full list
+            const foundCollege = response.data.find(
+              (col) =>
+                col.name.toLowerCase().includes(collegeName.toLowerCase()) ||
+                collegeName.toLowerCase().includes(col.name.toLowerCase())
+            );
+
+            if (foundCollege) {
+              setCollege(foundCollege);
+              console.log("Found College (fallback):", foundCollege);
+            } else {
+              setError(`No college found with name: ${collegeName}`);
+            }
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching college details:", error);
+          setError("Failed to fetch college details");
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      setError("No college name provided");
+      setLoading(false);
     }
   }, [collegeName]);
 
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+        <div className="container mt-5 text-center">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <p className="mt-3">Loading college details...</p>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <Navbar />
+        <div className="container mt-5 text-center">
+          <div className="alert alert-danger" role="alert">
+            <h4 className="alert-heading">Error!</h4>
+            <p>{error}</p>
+            <hr />
+            <button className="btn btn-primary" onClick={() => navigate(-1)}>
+              Go Back
+            </button>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
   if (!college) {
-    return <div>Loading...</div>;
+    return (
+      <>
+        <Navbar />
+        <div className="container mt-5 text-center">
+          <div className="alert alert-warning" role="alert">
+            <h4 className="alert-heading">No College Found</h4>
+            <p>Could not find details for the selected college.</p>
+            <hr />
+            <button className="btn btn-primary" onClick={() => navigate(-1)}>
+              Go Back
+            </button>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
   }
   const handleNavigate = () => {
     navigate("/appform", { state: { collegeName, collegeType } });

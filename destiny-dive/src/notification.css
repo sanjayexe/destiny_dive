@@ -1,0 +1,55 @@
+.notification-section {
+  padding: 40px 0;
+}
+
+.application-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e9ecef;
+}
+
+.application-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.application-status {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.application-id {
+  font-family: 'Courier New', monospace;
+  background-color: #f8f9fa;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.empty-state {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 3rem;
+  text-align: center;
+}
+
+.empty-state-icon {
+  font-size: 4rem;
+  color: #6c757d;
+  margin-bottom: 1rem;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+@media (max-width: 768px) {
+  .application-card {
+    margin-bottom: 1rem;
+  }
+  
+  .empty-state {
+    padding: 2rem;
+  }
+} 

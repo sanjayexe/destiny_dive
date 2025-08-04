@@ -21,6 +21,8 @@ import AccommodationApp from "./AccommodationApp";
 import Scholarship from "./Scholarship";
 import ScholarShipForm from "./ScholarShipForm";
 import ScholarshipDetails from "./ScholarshipDetails";
+import Notification from "./Notification";
+import About from "./About";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 const App = () => {
   return (
@@ -42,6 +44,8 @@ const App = () => {
             <Route path="/scholarship" element={<Scholarship />} />
             <Route path="/scForm" element={<ScholarShipForm />} />
             <Route path="/scdetails" element={<ScholarshipDetails />} />
+            <Route path="/notifications" element={<Notification />} />
+            <Route path="/about" element={<About />} />
           </Routes>
         </UserProvider>
         <Outlet />

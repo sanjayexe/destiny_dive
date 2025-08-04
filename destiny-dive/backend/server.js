@@ -54,8 +54,20 @@ app.get("/colleges", async (req, res) => {
 });
 
 app.get("/collegeinfos", async (req, res) => {
-  const infos = await CollegeInfo.find();
-  res.json(infos);
+  try {
+    const { name } = req.query;
+    let query = {};
+
+    if (name) {
+      query.name = { $regex: name, $options: "i" }; // Case-insensitive search
+    }
+
+    const infos = await CollegeInfo.find(query);
+    res.json(infos);
+  } catch (error) {
+    console.error("Error fetching college infos:", error);
+    res.status(500).json({ error: "Failed to fetch college infos" });
+  }
 });
 
 // POST: Submit scholarship form
@@ -110,8 +122,15 @@ app.patch("/scholarships/:id/reject", async (req, res) => {
 // POST: Submit college application form
 app.post("/applications", async (req, res) => {
   try {
+    console.log("POST /applications - Received data:", req.body);
+    console.log("Email in request:", req.body.email);
+
     const application = new Application(req.body);
+    console.log("Created application object:", application);
+
     await application.save();
+    console.log("Application saved successfully with ID:", application._id);
+
     res
       .status(201)
       .json({ message: "Application submitted successfully!", application });
@@ -122,8 +141,27 @@ app.post("/applications", async (req, res) => {
 });
 //GET all applications
 app.get("/applications", async (req, res) => {
-  const applications = await Application.find();
-  res.json(applications);
+  try {
+    const { email } = req.query;
+    let query = {};
+
+    console.log("GET /applications - Query params:", req.query);
+    console.log("Email filter:", email);
+
+    if (email) {
+      query.email = email;
+    }
+
+    console.log("MongoDB query:", query);
+    const applications = await Application.find(query);
+    console.log("Found applications:", applications.length);
+    console.log("Applications:", applications);
+
+    res.json(applications);
+  } catch (err) {
+    console.error("Error fetching applications:", err);
+    res.status(500).json({ error: "Failed to fetch applications" });
+  }
 });
 
 // Start server

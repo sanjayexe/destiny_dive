@@ -51,6 +51,11 @@ const Navbar = () => {
           {/* Navigation Links */}
           <ul className="navbar-nav mx-auto gap-3">
             <li className="nav-item">
+              <Link className="nav-link fw-semibold text-secondary" to="/">
+                Home
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link
                 className="nav-link fw-semibold text-secondary"
                 to="/colleges"
@@ -68,7 +73,7 @@ const Navbar = () => {
             </li>
             <li className="nav-item">
               <Link className="nav-link fw-semibold text-secondary" to="/about">
-                About
+                About Us
               </Link>
             </li>
           </ul>{" "}
