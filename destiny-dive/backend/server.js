@@ -13,6 +13,11 @@ dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
+// Allow popups (e.g., Google OAuth) to communicate via postMessage
+app.use((req, res, next) => {
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+  next();
+});
 
 // Connect to MongoDB Atlas
 const mongoUri = process.env.MONGO_URI;
