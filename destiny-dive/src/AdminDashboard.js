@@ -25,7 +25,9 @@ const AdminDashboard = () => {
   // API Call for Users
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:4503/users");
+      const response = await axios.get(
+        "https://destiny-dive.onrender.com/users"
+      );
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -35,7 +37,9 @@ const AdminDashboard = () => {
   // API Call for Universities
   const fetchUniversities = async () => {
     try {
-      const response = await axios.get("http://localhost:4503/colleges");
+      const response = await axios.get(
+        "https://destiny-dive.onrender.com/colleges"
+      );
       setUniversities(response.data);
     } catch (error) {
       console.error("Error fetching universities:", error);
@@ -45,7 +49,9 @@ const AdminDashboard = () => {
   // API Call for Applications
   const fetchApplications = async () => {
     try {
-      const response = await axios.get("http://localhost:4503/scholarships");
+      const response = await axios.get(
+        "https://destiny-dive.onrender.com/scholarships"
+      );
       setApplications(response.data);
     } catch (error) {
       console.error("Error fetching applications:", error);
@@ -54,7 +60,9 @@ const AdminDashboard = () => {
 
   const fetchCollegeInfos = async () => {
     try {
-      const response = await axios.get("http://localhost:4503/collegeinfos");
+      const response = await axios.get(
+        "https://destiny-dive.onrender.com/collegeinfos"
+      );
       setCollegeInfos(response.data);
     } catch (error) {
       console.error("Error fetching college infos:", error);
@@ -64,7 +72,9 @@ const AdminDashboard = () => {
   // Fetch all application forms (not just scholarships)
   const fetchAllApplications = async () => {
     try {
-      const response = await axios.get("http://localhost:4503/applications");
+      const response = await axios.get(
+        "https://destiny-dive.onrender.com/applications"
+      );
       setAllApplications(response.data);
     } catch (error) {
       console.error("Error fetching all applications:", error);
@@ -257,7 +267,7 @@ const AdminDashboard = () => {
                             className="btn btn-success btn-sm me-2"
                             onClick={async () => {
                               await axios.patch(
-                                `http://localhost:4503/scholarships/${app._id}/accept`
+                                `https://destiny-dive.onrender.com/scholarships/${app._id}/accept`
                               );
                               fetchApplications();
                             }}
@@ -268,7 +278,7 @@ const AdminDashboard = () => {
                             className="btn btn-danger btn-sm"
                             onClick={async () => {
                               await axios.patch(
-                                `http://localhost:4503/scholarships/${app._id}/reject`
+                                `https://destiny-dive.onrender.com/scholarships/${app._id}/reject`
                               );
                               fetchApplications();
                             }}
@@ -309,7 +319,7 @@ const AdminDashboard = () => {
                         className="btn btn-success btn-sm me-2"
                         onClick={async () => {
                           await axios.patch(
-                            `http://localhost:4503/scholarships/${app._id}/accept`
+                            `https://destiny-dive.onrender.com/scholarships/${app._id}/accept`
                           );
                           fetchApplications();
                         }}
@@ -320,7 +330,7 @@ const AdminDashboard = () => {
                         className="btn btn-danger btn-sm"
                         onClick={async () => {
                           await axios.patch(
-                            `http://localhost:4503/scholarships/${app._id}/reject`
+                            `https://destiny-dive.onrender.com/scholarships/${app._id}/reject`
                           );
                           fetchApplications();
                         }}

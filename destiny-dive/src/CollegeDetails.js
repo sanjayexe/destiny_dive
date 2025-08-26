@@ -25,7 +25,7 @@ const CollegeDetails = () => {
 
       axios
         .get(
-          `http://localhost:4503/collegeinfos?name=${encodeURIComponent(
+          `https://destiny-dive.onrender.com/collegeinfos?name=${encodeURIComponent(
             collegeName
           )}`
         )
@@ -36,7 +36,7 @@ const CollegeDetails = () => {
             console.log("Selected College:", response.data[0]);
           } else {
             // Try a broader search without the query parameter
-            return axios.get(`http://localhost:4503/collegeinfos`);
+            return axios.get(`https://destiny-dive.onrender.com/collegeinfos`);
           }
         })
         .then((response) => {

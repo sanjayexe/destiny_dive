@@ -96,7 +96,9 @@ const ScholarshipDetails = () => {
   const fetchScholarships = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:4503/scholarship");
+      const response = await axios.get(
+        "https://destiny-dive.onrender.com/scholarship"
+      );
       setScholarships(response.data);
     } catch (error) {
       console.error("Error fetching scholarships:", error);

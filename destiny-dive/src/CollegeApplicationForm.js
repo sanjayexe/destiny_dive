@@ -111,7 +111,7 @@ const ApplicationForm = () => {
       setSubmittedData(finalData);
 
       const response = await axios.post(
-        "http://localhost:4503/applications",
+        "https://destiny-dive.onrender.com/applications",
         finalData
       );
       console.log("Form Submitted Successfully: ", response.data);

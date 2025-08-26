@@ -80,7 +80,7 @@ const LoginPage = () => {
     try {
       // Send POST request for login
       const response = await axios.post(
-        `http://localhost:4503/api/login`, // Assuming your route for login is '/login'
+        `https://destiny-dive.onrender.com/api/login`, // Assuming your route for login is '/login'
         {
           emailOrMobile: formData.emailOrMobile,
           password: formData.password,
@@ -256,7 +256,7 @@ const LoginPage = () => {
                 onSuccess={async (credentialResponse) => {
                   try {
                     const response = await axios.post(
-                      "http://localhost:4503/api/google-login",
+                      "https://destiny-dive.onrender.com/api/google-login",
                       {
                         credential: credentialResponse.credential,
                       }

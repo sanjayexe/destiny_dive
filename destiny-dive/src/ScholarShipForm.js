@@ -120,7 +120,10 @@ const ScholarShipForm = () => {
           userEmail: user?.email || "",
           scholarshipName: selectedScholarship?.name || "",
         };
-        await axios.post("http://localhost:4503/scholarships", payload);
+        await axios.post(
+          "https://destiny-dive.onrender.com/scholarships",
+          payload
+        );
         setShowSuccess(true);
       } catch (error) {
         console.error("Error submitting form:", error);

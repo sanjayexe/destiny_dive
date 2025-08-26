@@ -43,7 +43,7 @@ function ProfilePage() {
 
       console.log("ProfilePage - Refreshing user data from database...");
       const response = await axios.get(
-        `http://localhost:4503/api/users/${userId}`
+        `https://destiny-dive.onrender.com/api/users/${userId}`
       );
       const refreshedUser = response.data;
 
@@ -163,7 +163,7 @@ function ProfilePage() {
     try {
       const userId = user.id || user._id;
       const response = await axios.put(
-        `http://localhost:4503/api/users/${userId}`,
+        `https://destiny-dive.onrender.com/api/users/${userId}`,
         {
           [field]: profile[field],
         }
@@ -292,7 +292,7 @@ function ProfilePage() {
 
         // Save to database
         const response = await axios.put(
-          `http://localhost:4503/api/users/${userId}`,
+          `https://destiny-dive.onrender.com/api/users/${userId}`,
           {
             profileImage: compressedImageData,
           }

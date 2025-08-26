@@ -21,7 +21,7 @@ const Notification = () => {
 
         // Use the backend endpoint with email filtering
         const response = await fetch(
-          `http://localhost:4503/applications?email=${encodeURIComponent(
+          `https://destiny-dive.onrender.com/applications?email=${encodeURIComponent(
             user?.email
           )}`
         );
@@ -124,7 +124,7 @@ const Notification = () => {
                 onClick={async () => {
                   try {
                     const response = await fetch(
-                      "http://localhost:4503/applications"
+                      "https://destiny-dive.onrender.com/applications"
                     );
                     const data = await response.json();
                     console.log("All applications:", data);
@@ -142,7 +142,7 @@ const Notification = () => {
                 onClick={async () => {
                   try {
                     const response = await fetch(
-                      `http://localhost:4503/applications?email=${encodeURIComponent(
+                      `https://destiny-dive.onrender.com/applications?email=${encodeURIComponent(
                         user?.email
                       )}`
                     );
@@ -172,7 +172,7 @@ const Notification = () => {
                       phoneNumber: "1234567890",
                     };
                     const response = await fetch(
-                      "http://localhost:4503/applications",
+                      "https://destiny-dive.onrender.com/applications",
                       {
                         method: "POST",
                         headers: {

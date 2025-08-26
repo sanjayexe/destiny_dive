@@ -95,7 +95,9 @@ const CollegeList = () => {
 
   const fetchColleges = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:4503/colleges");
+      const response = await axios.get(
+        "https://destiny-dive.onrender.com/colleges"
+      );
       setColleges(response.data);
       setLoading(false);
     } catch (error) {

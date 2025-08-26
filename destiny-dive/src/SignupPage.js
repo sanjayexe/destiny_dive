@@ -68,12 +68,15 @@ const SignupPage = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        const response = await axios.post("http://localhost:4503/api/users", {
-          username: formData.username,
-          emailOrMobile: formData.emailOrMobile,
-          password: formData.password,
-          //otp: formData.otp,
-        });
+        const response = await axios.post(
+          "https://destiny-dive.onrender.com/api/users",
+          {
+            username: formData.username,
+            emailOrMobile: formData.emailOrMobile,
+            password: formData.password,
+            //otp: formData.otp,
+          }
+        );
 
         // Show success message with input type
         const inputType = response.data.userType;
@@ -269,7 +272,7 @@ const SignupPage = () => {
                 onSuccess={async (credentialResponse) => {
                   try {
                     const response = await axios.post(
-                      "http://localhost:4503/api/google-login",
+                      "https://destiny-dive.onrender.com/api/google-login",
                       {
                         credential: credentialResponse.credential,
                       }
